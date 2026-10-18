@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!--
+        Author: Adam Smithhisler
+        Date: 10/18/2026
+        Assignment: Project - Style & Substance
+        Purpose: Custom 3D printing request page for the One in 144 e-commerce website.
+    -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Custom 3D Printing | One in 144</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Michroma&family=Rajdhani:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-content">
+
+            <h1>One in 144</h1>
+            <p>One Build. 144 Possibilities.</p>
+
+            <nav aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="custom-print.html" aria-current="page">Custom Print</a>
+                <a href="resources.html">Builder Resources</a>
+                <a href="cart.html">Cart</a>
+            </nav>
+
+        </div>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <p>DESIGN • PRINT • BUILD</p>
+
+            <h2>Custom 3D Printing</h2>
+
+            <p>
+                Upload an original design or a design you have permission
+                to reproduce and request a limited custom print for your
+                next model or diorama project.
+            </p>
+        </section>
+
+
+        <section>
+
+            <h2>How It Works</h2>
+
+            <div class="category-grid">
+
+                <article class="category-card">
+                    <h3>1. Upload Your Design</h3>
+                    <p>
+                        Submit a supported 3D model file for review.
+                    </p>
+                </article>
+
+                <article class="category-card">
+                    <h3>2. Select Print Options</h3>
+                    <p>
+                        Choose material, quantity, and provide project notes.
+                    </p>
+                </article>
+
+                <article class="category-card">
+                    <h3>3. Review Before Ordering</h3>
+                    <p>
+                        Approved designs will eventually receive pricing
+                        before being added to the shopping cart.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <section class="custom-print-layout">
+
+            <article class="custom-print-form">
+
+                <h2>Print Request</h2>
+
+                <form action="#" method="post" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label for="design-file">
+                            Design File
+                        </label>
+
+                        <input type="file" id="design-file" name="design-file" accept=".stl,.obj">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="material">
+                            Material
+                        </label>
+
+                        <select id="material" name="material">
+
+                            <option value="standard-resin">
+                                Standard Resin
+                            </option>
+
+                            <option value="abs-resin">
+                                ABS-Like Resin
+                            </option>
+
+                            <option value="pla">
+                                PLA Prototype
+                            </option>
+
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="quantity">
+                            Quantity
+                        </label>
+
+                        <input type="number" id="quantity" name="quantity" min="1" max="10" value="1">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="scale">
+                            Intended Scale
+                        </label>
+
+                        <select id="scale" name="scale">
+
+                            <option value="1-144">
+                                1/144
+                            </option>
+
+                            <option value="other">
+                                Other
+                            </option>
+
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="notes">
+                            Project Notes
+                        </label>
+
+                        <textarea id="notes" name="notes" rows="6"
+                            placeholder="Describe the part, intended use, fit requirements, or other important details."></textarea>
+                    </div>
+
+
+                    <div class="form-group checkbox-group">
+
+                        <input type="checkbox" id="permission" name="permission" required>
+
+                        <label for="permission">
+                            I confirm that I created this design or have
+                            permission to reproduce it.
+                        </label>
+
+                    </div>
+
+
+                    <button class="product-button" type="submit">
+                        Submit
+                    </button>
+
+                </form>
+
+            </article>
+
+
+            <aside class="print-guidelines">
+
+                <h2>Print Guidelines</h2>
+
+                <ul>
+                    <li>
+                        Orders are intended for personal hobby projects.
+                    </li>
+
+                    <li>
+                        Quantity is limited to small production runs.
+                    </li>
+
+                    <li>
+                        Designs must be original or authorized for reproduction.
+                    </li>
+
+                    <li>
+                        Oversized or unusually complex designs may not be accepted.
+                    </li>
+
+                    <li>
+                        Pricing and approval will be reviewed before checkout.
+                    </li>
+                </ul>
+
+                <p>
+                    <strong>Prototype Notice:</strong>
+                    File processing and automatic pricing are not active
+                    during this stage of development.
+                </p>
+
+            </aside>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>&copy; 2026 One in 144</p>
+    </footer>
+
+</body>
+
+</html>
+
+

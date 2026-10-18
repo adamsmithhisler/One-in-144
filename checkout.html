@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!--
+        Author: Adam Smithhisler
+        Date: 10/18/2026
+        Assignment: Project - Style & Substance
+        Purpose: Checkout page for the One in 144 e-commerce website.
+    -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | One in 144</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Michroma&family=Rajdhani:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-content">
+
+            <h1>One in 144</h1>
+            <p>One Build. 144 Possibilities.</p>
+
+            <nav aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="custom-print.html">Custom Print</a>
+                <a href="resources.html">Builder Resources</a>
+                <a href="cart.html">Cart</a>
+            </nav>
+
+        </div>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <p>SHIPPING • REVIEW • COMPLETE</p>
+
+            <h2>Checkout</h2>
+
+            <p>
+                Enter your shipping information and review
+                the current order before completing checkout.
+            </p>
+        </section>
+
+
+        <section class="checkout-layout">
+
+            <article class="checkout-form">
+
+                <h2>Shipping Information</h2>
+
+                <form action="confirmation.html" method="get">
+
+                    <div class="form-group">
+                        <label for="full-name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="full-name"
+                            name="full-name"
+                            autocomplete="name"
+                            required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            autocomplete="email"
+                            required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="address">
+                            Street Address
+                        </label>
+
+                        <input
+                            type="text"
+                            id="address"
+                            name="address"
+                            autocomplete="street-address"
+                            required>
+                    </div>
+
+
+                    <div class="checkout-row">
+
+                        <div class="form-group">
+                            <label for="city">
+                                City
+                            </label>
+
+                            <input
+                                type="text"
+                                id="city"
+                                name="city"
+                                autocomplete="address-level2"
+                                required>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="state">
+                                State
+                            </label>
+
+                            <input
+                                type="text"
+                                id="state"
+                                name="state"
+                                autocomplete="address-level1"
+                                required>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="zip">
+                            ZIP Code
+                        </label>
+
+                        <input
+                            type="text"
+                            id="zip"
+                            name="zip"
+                            inputmode="numeric"
+                            autocomplete="postal-code"
+                            required>
+                    </div>
+
+
+                    <button class="product-button" type="submit">
+                        Submit Order
+                    </button>
+
+                </form>
+
+            </article>
+
+
+            <aside class="checkout-summary">
+
+                <h2>Order Summary</h2>
+
+                <div class="checkout-item">
+
+                    <div>
+                        <h3>HG 1/144 Urban Combat Model Kit</h3>
+                        <p>Quantity: 1</p>
+                    </div>
+
+                    <strong>$24.99</strong>
+
+                </div>
+
+
+                <div class="checkout-item">
+
+                    <div>
+                        <h3>1/144 Mechanical Detail Pack</h3>
+                        <p>Quantity: 1</p>
+                    </div>
+
+                    <strong>$14.99</strong>
+
+                </div>
+
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <strong>$39.98</strong>
+                </div>
+
+
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <strong>Calculated Later</strong>
+                </div>
+
+
+                <div class="summary-row summary-total">
+                    <span>Total</span>
+                    <strong>$39.98</strong>
+                </div>
+
+
+                <p class="prototype-note">
+                    Payment processing is not active during
+                    this stage of development.
+                </p>
+
+            </aside>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>&copy; 2026 One in 144</p>
+    </footer>
+
+</body>
+
+</html>
