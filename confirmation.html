@@ -4,15 +4,16 @@
 <head>
     <!--
         Author: Adam Smithhisler
-        Date: 10/18/2026
-        Assignment: Project - Style & Substance
-        Purpose: Order confirmation page for the One in 144 e-commerce website.
+        Date: 10/27/2026
+        Assignment: Final Project - Interactive E-Commerce Features
+        Purpose: Displays confirmation information for a completed
+                 One in 144 prototype order.
     -->
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Order Confirmed | One in 144</title>
+    <title>Order Confirmation | One in 144</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,15 +33,29 @@
             <h1>One in 144</h1>
             <p>One Build. 144 Possibilities.</p>
 
+            <nav aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="custom-print.html">Custom Print</a>
+                <a href="resources.html">Builder Resources</a>
+                <a href="contact.html">Contact</a>
+                <a href="cart.html">Cart</a>
+            </nav>
+
         </div>
     </header>
+
+
+    <div class="shipping-banner" role="status">
+        FREE SHIPPING ON ORDERS $75 AND UP
+    </div>
 
 
     <main>
 
         <section class="confirmation-container">
 
-            <div class="confirmation-card">
+            <article class="confirmation-card">
 
                 <p class="confirmation-label">
                     ORDER COMPLETE
@@ -48,13 +63,8 @@
 
                 <h2>Thank You for Your Order</h2>
 
-                <p>
-                    Your order has been submitted successfully.
-                </p>
-
-                <p>
-                    You will receive an email confirmation with
-                    additional order and shipping information.
+                <p id="confirmationMessage">
+                    Your One in 144 prototype order has been successfully submitted.
                 </p>
 
 
@@ -62,37 +72,81 @@
 
                     <h3>Order Summary</h3>
 
-                    <div class="summary-row">
-                        <span>HG 1/144 Urban Combat Model Kit</span>
-                        <strong>$24.99</strong>
-                    </div>
+                    <div id="confirmationItems"></div>
+
 
                     <div class="summary-row">
-                        <span>1/144 Mechanical Detail Pack</span>
-                        <strong>$14.99</strong>
+
+                        <span>Subtotal</span>
+
+                        <strong id="confirmationSubtotal">
+                            $0.00
+                        </strong>
+
                     </div>
+
+
+                    <div
+                        class="summary-row"
+                        id="confirmationDiscountRow"
+                        hidden>
+
+                        <span>Discount</span>
+
+                        <strong id="confirmationDiscount">
+                            -$0.00
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>Shipping</span>
+
+                        <strong id="confirmationShipping">
+                            $0.00
+                        </strong>
+
+                    </div>
+
 
                     <div class="summary-row summary-total">
+
                         <span>Order Total</span>
-                        <strong>$39.98</strong>
+
+                        <strong id="confirmationTotal">
+                            $0.00
+                        </strong>
+
                     </div>
 
                 </div>
 
 
+                <p class="prototype-note">
+                    This order was created as part of the One in 144
+                    classroom prototype. No payment has been processed.
+                </p>
+
+
                 <div class="confirmation-actions">
 
-                    <a class="product-button" href="shop.html">
+                    <a
+                        class="product-button"
+                        href="shop.html">
                         Continue Shopping
                     </a>
 
-                    <a class="secondary-button" href="index.html">
+                    <a
+                        class="secondary-button"
+                        href="index.html">
                         Return Home
                     </a>
 
                 </div>
 
-            </div>
+            </article>
 
         </section>
 
@@ -100,8 +154,21 @@
 
 
     <footer>
-        <p>&copy; 2026 One in 144</p>
+
+        <p>
+            <a href="contact.html">
+                Contact Us
+            </a>
+        </p>
+
+        <p>
+            &copy; 2026 One in 144
+        </p>
+
     </footer>
+
+
+    <script src="js/script.js"></script>
 
 </body>
 

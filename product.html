@@ -4,8 +4,8 @@
 <head>
     <!--
         Author: Adam Smithhisler
-        Date: 10/18/2026
-        Assignment: Project - Style & Substance
+        Date: 10/27/2026
+        Assignment: Final Project - Interactive E-Commerce Features
         Purpose: Product details page for the One in 144 e-commerce website.
     -->
 
@@ -37,30 +37,46 @@
                 <a href="shop.html">Shop</a>
                 <a href="custom-print.html">Custom Print</a>
                 <a href="resources.html">Builder Resources</a>
+                <a href="contact.html">Contact</a>
                 <a href="cart.html">Cart</a>
             </nav>
 
         </div>
     </header>
 
+
+    <div class="shipping-banner" role="status">
+        FREE SHIPPING ON ORDERS $75 AND UP
+    </div>
+
+
     <main>
 
+        <!-- ========================================
+             PRODUCT HERO
+        ========================================= -->
+
         <section class="hero">
-            <p>MODEL KIT • 1/144 SCALE • BEGINNER</p>
+
+            <p>MODEL KIT • 1/144 SCALE</p>
 
             <h2>HG 1/144 Urban Combat Model Kit</h2>
 
             <p>
-                A beginner-friendly 1/144-scale model kit designed
-                for straight builds, customization, kitbashing,
-                and diorama projects.
+                A versatile 1/144-scale model kit designed for
+                customization, kitbashing, and detailed display builds.
             </p>
+
         </section>
 
 
+        <!-- ========================================
+             PRODUCT DETAILS
+        ========================================= -->
+
         <section class="product-detail">
 
-            <article class="product-card product-info">
+            <article class="category-card product-info">
 
                 <h2>Product Information</h2>
 
@@ -75,17 +91,19 @@
                 </p>
 
                 <p>
-                    <strong>Availability:</strong> 18 in stock
+                    <strong>Availability:</strong>
+                    18 in stock
                 </p>
 
-                <a class="product-button" href="cart.html">
+
+                <button type="button" class="add-to-cart product-page-add-to-cart" data-product-id="KIT-001">
                     Add to Cart
-                </a>
+                </button>
 
             </article>
 
 
-            <article class="product-card">
+            <article class="category-card">
 
                 <h2>Specifications</h2>
 
@@ -132,6 +150,10 @@
         </section>
 
 
+        <!-- ========================================
+             RECOMMENDED PRODUCTS
+        ========================================= -->
+
         <section>
 
             <h2>Recommended for This Build</h2>
@@ -139,44 +161,62 @@
             <div class="product-grid">
 
                 <article class="product-card">
+
                     <h3>1/144 Mechanical Detail Pack</h3>
 
                     <p>
-                        Add vents, armor details, thrusters,
-                        piping, and other mechanical components.
+                        Add vents, armor details, thrusters, piping,
+                        and other mechanical components.
                     </p>
 
-                    <p><strong>$14.99</strong></p>
+                    <p>
+                        <strong>$14.99</strong>
+                    </p>
 
-                    <a href="shop.html">View in Shop</a>
+                    <a href="shop.html">
+                        View in Shop
+                    </a>
+
                 </article>
 
 
                 <article class="product-card">
+
                     <h3>Urban Ruin Display Base</h3>
 
                     <p>
-                        Create a matching urban environment
-                        for the completed model.
+                        Create a matching urban environment for
+                        the completed model.
                     </p>
 
-                    <p><strong>$19.99</strong></p>
+                    <p>
+                        <strong>$19.99</strong>
+                    </p>
 
-                    <a href="shop.html">View in Shop</a>
+                    <a href="shop.html">
+                        View in Shop
+                    </a>
+
                 </article>
 
 
                 <article class="product-card">
+
                     <h3>Weathering Starter Pack</h3>
 
                     <p>
-                        Add realistic dirt, wear, grime,
-                        and environmental effects.
+                        Add realistic dirt, wear, grime, and
+                        environmental effects.
                     </p>
 
-                    <p><strong>$17.99</strong></p>
+                    <p>
+                        <strong>$17.99</strong>
+                    </p>
 
-                    <a href="shop.html">View in Shop</a>
+                    <a href="shop.html">
+                        View in Shop
+                    </a>
+
                 </article>
 
             </div>
@@ -187,8 +227,21 @@
 
 
     <footer>
-        <p>&copy; 2026 One in 144</p>
+
+        <p>
+            <a href="contact.html">
+                Contact Us
+            </a>
+        </p>
+
+        <p>
+            &copy; 2026 One in 144
+        </p>
+
     </footer>
+
+
+    <script src="js/script.js"></script>
 
 </body>
 

@@ -4,9 +4,12 @@
 <head>
     <!--
         Author: Adam Smithhisler
-        Date: 10/18/2026
-        Assignment: Project - Style & Substance
+        Date: 10/27/2026
+        Assignment: Final Project - Interactive E-Commerce Features
         Purpose: Checkout page for the One in 144 e-commerce website.
+                 Collects shipping and prototype payment information,
+                 validates input, applies coupon discounts, and displays
+                 dynamic order pricing.
     -->
 
     <meta charset="UTF-8">
@@ -43,17 +46,24 @@
         </div>
     </header>
 
+    <div class="shipping-banner" role="status">
+        FREE SHIPPING ON ORDERS $75 AND UP
+    </div>
+
     <main>
 
         <section class="hero">
-            <p>SHIPPING • REVIEW • COMPLETE</p>
+
+            <p>SHIPPING • PAYMENT • COMPLETE</p>
 
             <h2>Checkout</h2>
 
             <p>
-                Enter your shipping information and review
-                the current order before completing checkout.
+                Enter your shipping and purchase information,
+                apply an available coupon code, and review your
+                order before completing checkout.
             </p>
+
         </section>
 
 
@@ -61,157 +71,277 @@
 
             <article class="checkout-form">
 
-                <h2>Shipping Information</h2>
+                <form id="checkoutForm">
 
-                <form action="confirmation.html" method="get">
+                    <!-- ========================================
+                         SHIPPING INFORMATION
+                    ========================================= -->
 
-                    <div class="form-group">
-                        <label for="full-name">
-                            Full Name
-                        </label>
+                    <section aria-labelledby="shipping-heading">
 
-                        <input
-                            type="text"
-                            id="full-name"
-                            name="full-name"
-                            autocomplete="name"
-                            required>
-                    </div>
+                        <h2 id="shipping-heading">
+                            Shipping Information
+                        </h2>
 
-
-                    <div class="form-group">
-                        <label for="email">
-                            Email Address
-                        </label>
-
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            autocomplete="email"
-                            required>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="address">
-                            Street Address
-                        </label>
-
-                        <input
-                            type="text"
-                            id="address"
-                            name="address"
-                            autocomplete="street-address"
-                            required>
-                    </div>
-
-
-                    <div class="checkout-row">
 
                         <div class="form-group">
-                            <label for="city">
-                                City
+
+                            <label for="shipping-name">
+                                Full Name
                             </label>
 
-                            <input
-                                type="text"
-                                id="city"
-                                name="city"
-                                autocomplete="address-level2"
-                                required>
+                            <input type="text" id="shipping-name" name="shipping-name" autocomplete="name" required>
+
                         </div>
 
 
                         <div class="form-group">
-                            <label for="state">
-                                State
+
+                            <label for="shipping-address">
+                                Street Address
                             </label>
 
-                            <input
-                                type="text"
-                                id="state"
-                                name="state"
-                                autocomplete="address-level1"
-                                required>
+                            <input type="text" id="shipping-address" name="shipping-address"
+                                autocomplete="street-address" required>
+
                         </div>
 
-                    </div>
+
+                        <div class="checkout-row">
+
+                            <div class="form-group">
+
+                                <label for="shipping-city">
+                                    City
+                                </label>
+
+                                <input type="text" id="shipping-city" name="shipping-city" autocomplete="address-level2"
+                                    required>
+
+                            </div>
 
 
-                    <div class="form-group">
-                        <label for="zip">
-                            ZIP Code
-                        </label>
+                            <div class="form-group">
 
-                        <input
-                            type="text"
-                            id="zip"
-                            name="zip"
-                            inputmode="numeric"
-                            autocomplete="postal-code"
-                            required>
-                    </div>
+                                <label for="shipping-state">
+                                    State
+                                </label>
+
+                                <input type="text" id="shipping-state" name="shipping-state"
+                                    autocomplete="address-level1" maxlength="2" placeholder="NE" required>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="checkout-row">
+
+                            <div class="form-group">
+
+                                <label for="shipping-zip">
+                                    ZIP Code
+                                </label>
+
+                                <input type="text" id="shipping-zip" name="shipping-zip" inputmode="numeric"
+                                    autocomplete="postal-code" pattern="[0-9]{5}(-[0-9]{4})?" placeholder="68123"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="shipping-phone">
+                                    Phone Number
+                                </label>
+
+                                <input type="tel" id="shipping-phone" name="shipping-phone" autocomplete="tel"
+                                    placeholder="402-555-1234" required>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- ========================================
+                         PURCHASE INFORMATION
+                    ========================================= -->
+
+                    <section aria-labelledby="payment-heading">
+
+                        <h2 id="payment-heading">
+                            Purchase Information
+                        </h2>
+
+
+                        <div class="form-group">
+
+                            <label for="cardholder-name">
+                                Cardholder Name
+                            </label>
+
+                            <input type="text" id="cardholder-name" name="cardholder-name" autocomplete="cc-name"
+                                required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="card-number">
+                                Credit Card Number
+                            </label>
+
+                            <input type="text" id="card-number" name="card-number" inputmode="numeric"
+                                autocomplete="cc-number" maxlength="19" placeholder="1234 5678 9012 3456" required>
+
+                        </div>
+
+
+                        <div class="checkout-row">
+
+                            <div class="form-group">
+
+                                <label for="expiration-date">
+                                    Expiration Date
+                                </label>
+
+                                <input type="month" id="expiration-date" name="expiration-date" autocomplete="cc-exp"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="security-code">
+                                    Security Code
+                                </label>
+
+                                <input type="text" id="security-code" name="security-code" inputmode="numeric"
+                                    autocomplete="cc-csc" minlength="3" maxlength="4" placeholder="123" required>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- ========================================
+                         COUPON
+                    ========================================= -->
+
+                    <section aria-labelledby="coupon-heading">
+
+                        <h2 id="coupon-heading">
+                            Coupon Code
+                        </h2>
+
+                        <div class="form-group">
+
+                            <label for="coupon-code">
+                                Coupon Code
+                            </label>
+
+                            <input type="text" id="coupon-code" name="coupon-code" placeholder="Enter coupon code">
+
+                        </div>
+
+
+                        <button class="secondary-button coupon-button" id="applyCouponButton" type="button">
+                            Apply Coupon
+                        </button>
+
+
+                        <p id="couponMessage" class="coupon-message" aria-live="polite">
+                        </p>
+
+                    </section>
 
 
                     <button class="product-button" type="submit">
                         Submit Order
                     </button>
 
+
+                    <p id="checkoutMessage" aria-live="polite">
+                    </p>
+
+
+                    <p class="prototype-note">
+                        This checkout is a classroom prototype.
+                        No real payment information is processed
+                        or transmitted.
+                    </p>
+
                 </form>
 
             </article>
 
 
+            <!-- ========================================
+                 ORDER SUMMARY
+            ========================================= -->
+
             <aside class="checkout-summary">
 
                 <h2>Order Summary</h2>
 
-                <div class="checkout-item">
 
-                    <div>
-                        <h3>HG 1/144 Urban Combat Model Kit</h3>
-                        <p>Quantity: 1</p>
-                    </div>
-
-                    <strong>$24.99</strong>
-
-                </div>
-
-
-                <div class="checkout-item">
-
-                    <div>
-                        <h3>1/144 Mechanical Detail Pack</h3>
-                        <p>Quantity: 1</p>
-                    </div>
-
-                    <strong>$14.99</strong>
-
-                </div>
+                <div id="checkoutItems"></div>
 
 
                 <div class="summary-row">
+
                     <span>Subtotal</span>
-                    <strong>$39.98</strong>
+
+                    <strong id="checkoutSubtotal">
+                        $0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row" id="discountRow" hidden>
+
+                    <span>Discount</span>
+
+                    <strong id="checkoutDiscount">
+                        -$0.00
+                    </strong>
+
                 </div>
 
 
                 <div class="summary-row">
+
                     <span>Shipping</span>
-                    <strong>Calculated Later</strong>
+
+                    <strong id="checkoutShipping">
+                        $0.00
+                    </strong>
+
                 </div>
 
 
                 <div class="summary-row summary-total">
+
                     <span>Total</span>
-                    <strong>$39.98</strong>
+
+                    <strong id="checkoutTotal">
+                        $0.00
+                    </strong>
+
                 </div>
 
 
                 <p class="prototype-note">
-                    Payment processing is not active during
-                    this stage of development.
+                    Orders of $75 or more receive free shipping.
+                    Orders below $75 include $6.99 flat-rate shipping.
                 </p>
 
             </aside>
@@ -222,8 +352,19 @@
 
 
     <footer>
-        <p>&copy; 2026 One in 144</p>
+
+        <p>
+            <a href="contact.html">Contact Us</a>
+        </p>
+
+        <p>
+            &copy; 2026 One in 144
+        </p>
+
     </footer>
+
+
+    <script src="js/script.js"></script>
 
 </body>
 

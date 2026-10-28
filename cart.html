@@ -4,9 +4,10 @@
 <head>
     <!--
         Author: Adam Smithhisler
-        Date: 10/18/2026
-        Assignment: Project - Style & Substance
-        Purpose: Shopping cart page for the One in 144 e-commerce website.
+        Date: 10/27/2026
+        Assignment: Final Project - Interactive E-Commerce Features
+        Purpose: Dynamic shopping cart page for the One in 144
+                 e-commerce website.
     -->
 
     <meta charset="UTF-8">
@@ -43,9 +44,19 @@
         </div>
     </header>
 
+    <div class="shipping-banner" role="status">
+        FREE SHIPPING ON ORDERS $75 AND UP
+    </div>
+
+
     <main>
 
+        <!-- ========================================
+             CART HERO
+        ========================================= -->
+
         <section class="hero">
+
             <p>REVIEW • CONFIRM • CHECKOUT</p>
 
             <h2>Shopping Cart</h2>
@@ -54,66 +65,40 @@
                 Review the items selected for your build before
                 continuing to checkout.
             </p>
+
         </section>
 
 
+        <!-- ========================================
+             CART LAYOUT
+        ========================================= -->
+
         <section class="cart-layout">
 
-            <div class="cart-items">
-
-                <article class="cart-item">
-
-                    <div>
-                        <h3>HG 1/144 Urban Combat Model Kit</h3>
-
-                        <p>
-                            1/144-scale model kit for customization,
-                            kitbashing, and diorama projects.
-                        </p>
-
-                        <p>
-                            <strong>Quantity:</strong> 1
-                        </p>
-                    </div>
-
-                    <p class="cart-price">
-                        $24.99
-                    </p>
-
-                </article>
-
-
-                <article class="cart-item">
-
-                    <div>
-                        <h3>1/144 Mechanical Detail Pack</h3>
-
-                        <p>
-                            Resin vents, armor panels, thrusters,
-                            piping, and mechanical details.
-                        </p>
-
-                        <p>
-                            <strong>Quantity:</strong> 1
-                        </p>
-                    </div>
-
-                    <p class="cart-price">
-                        $14.99
-                    </p>
-
-                </article>
-
+            <!--
+                Cart products are generated dynamically
+                by js/script.js.
+            -->
+            <div class="cart-items" id="cartItems">
             </div>
 
+
+            <!-- ========================================
+                 ORDER SUMMARY
+            ========================================= -->
 
             <aside class="cart-summary">
 
                 <h2>Order Summary</h2>
 
                 <div class="summary-row">
+                    <span>Items</span>
+                    <strong id="cartItemCount">0</strong>
+                </div>
+
+                <div class="summary-row">
                     <span>Subtotal</span>
-                    <strong>$39.98</strong>
+                    <strong id="cartSubtotal">$0.00</strong>
                 </div>
 
                 <div class="summary-row">
@@ -123,11 +108,15 @@
 
                 <div class="summary-row summary-total">
                     <span>Total</span>
-                    <strong>$39.98</strong>
+                    <strong id="cartTotal">$0.00</strong>
                 </div>
 
-                <a class="product-button" href="checkout.html">
+                <a class="product-button" id="checkoutButton" href="checkout.html">
                     Checkout
+                </a>
+
+                <a class="secondary-button" href="shop.html">
+                    Continue Shopping
                 </a>
 
             </aside>
@@ -138,8 +127,22 @@
 
 
     <footer>
-        <p>&copy; 2026 One in 144</p>
+
+        <p>
+            <a href="contact.html">Contact Us</a>
+        </p>
+
+        <p>
+            &copy; 2026 One in 144
+        </p>
+
     </footer>
+
+    <!-- ========================================
+         JAVASCRIPT
+    ========================================= -->
+
+    <script src="js/script.js"></script>
 
 </body>
 

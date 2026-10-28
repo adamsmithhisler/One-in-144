@@ -1,9 +1,10 @@
 /*
     Author: Adam Smithhisler
-    Date: 10/18/2026
-    Assignment: Project - Style & Substance
+    Date: 10/27/2026
+    Assignment: Final Project - Interactive E-Commerce Features
     Purpose: Shared styling for the One in 144 e-commerce website.
 */
+
 
 /* ========================================
    BRAND COLORS
@@ -25,6 +26,10 @@
 
 * {
     box-sizing: border-box;
+}
+
+[hidden] {
+    display: none !important;
 }
 
 body {
@@ -81,6 +86,7 @@ header {
 .header-content {
     max-width: 1200px;
     margin: 0 auto;
+    text-align: center;
 }
 
 header h1 {
@@ -96,6 +102,7 @@ header p {
 nav {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 15px;
     margin-top: 15px;
 }
@@ -109,6 +116,29 @@ nav a {
 nav a:hover,
 nav a:focus {
     color: var(--technical-blue);
+}
+
+nav a[aria-current="page"] {
+    color: var(--technical-blue);
+}
+
+
+/* ========================================
+   FREE SHIPPING BANNER
+======================================== */
+
+.shipping-banner {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: var(--signal-orange);
+    color: var(--deep-charcoal);
+    text-align: center;
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
 }
 
 
@@ -176,6 +206,10 @@ section>h2 {
     margin-bottom: 20px;
 }
 
+.section-description {
+    margin-bottom: 25px;
+}
+
 
 /* ========================================
    CARD LAYOUTS
@@ -200,6 +234,16 @@ section>h2 {
     margin-top: 0;
 }
 
+
+/* ========================================
+   PRODUCT CARDS
+======================================== */
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+}
+
 .product-card a {
     color: var(--technical-blue);
 }
@@ -209,9 +253,94 @@ section>h2 {
     color: var(--off-white);
 }
 
+.product-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: auto;
+    padding-top: 15px;
+}
+
+.product-actions a,
+button.add-to-cart {
+    color: var(--technical-blue);
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-decoration: underline;
+}
+
+button.add-to-cart {
+    margin: 0 0 0 auto;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.product-actions a:hover,
+.product-actions a:focus,
+button.add-to-cart:hover,
+button.add-to-cart:focus {
+    color: var(--off-white);
+}
+
+button.add-to-cart:focus-visible,
+.product-actions a:focus-visible {
+    outline: 2px solid var(--signal-orange);
+    outline-offset: 4px;
+}
+
 
 /* ========================================
-   CUSTOM PRINT SECTION
+   PRODUCT PAGE ADD TO CART
+======================================== */
+
+button.add-to-cart.product-page-add-to-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    margin: 18px 0 0 0;
+    padding: 14px 20px;
+
+    background-color: var(--signal-orange);
+    color: var(--deep-charcoal);
+
+    border: none;
+    border-radius: 4px;
+
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 1.5px;
+
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    cursor: pointer;
+}
+
+button.add-to-cart.product-page-add-to-cart:hover,
+button.add-to-cart.product-page-add-to-cart:focus {
+    background-color: var(--off-white);
+    color: var(--deep-charcoal);
+}
+
+button.add-to-cart.product-page-add-to-cart:focus-visible {
+    outline: 2px solid var(--technical-blue);
+    outline-offset: 4px;
+}
+
+
+/* ========================================
+   CUSTOM PRINT PROMOTION SECTION
 ======================================== */
 
 .custom-print {
@@ -242,52 +371,55 @@ section>h2 {
 
 
 /* ========================================
-   FOOTER
+   BUTTONS
 ======================================== */
 
-footer {
-    margin-top: 40px;
-    padding: 20px;
-    text-align: center;
-    background-color: var(--steel-gray);
+.product-button {
+    display: inline-block;
+    padding: 12px 24px;
+    margin-top: 10px;
+    background-color: var(--signal-orange);
+    color: var(--deep-charcoal);
+    border: none;
+    text-decoration: none;
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-
-/* ========================================
-   RESPONSIVE LAYOUT
-======================================== */
-
-/* Tablet */
-@media (min-width: 768px) {
-
-    .category-grid,
-    .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+.product-button:hover,
+.product-button:focus {
+    background-color: var(--off-white);
+    color: var(--deep-charcoal);
 }
 
-
-/* Desktop */
-@media (min-width: 1024px) {
-
-    .category-grid,
-    .product-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
+.secondary-button {
+    display: inline-block;
+    padding: 12px 24px;
+    margin-top: 10px;
+    background: transparent;
+    color: var(--technical-blue);
+    border: none;
+    text-decoration: none;
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
 }
 
-
-/* Small Screens */
-@media (max-width: 767px) {
-
-    .hero {
-        padding: 40px 10px;
-    }
-
-    .hero h2 {
-        font-size: 2.1rem;
-    }
+.secondary-button:hover,
+.secondary-button:focus {
+    color: var(--off-white);
 }
+
+.product-button:focus-visible,
+.secondary-button:focus-visible {
+    outline: 2px solid var(--signal-orange);
+    outline-offset: 4px;
+}
+
 
 /* ========================================
    PRODUCT DETAILS PAGE
@@ -304,29 +436,15 @@ footer {
     border-left: 5px solid var(--signal-orange);
 }
 
+.product-info h2 {
+    margin-top: 0;
+}
+
 .product-price {
     font-family: "Rajdhani", sans-serif;
     font-size: 2rem;
     font-weight: 700;
     color: var(--off-white);
-}
-
-.product-button {
-    display: inline-block;
-    padding: 12px 24px;
-    margin-top: 10px;
-    background-color: var(--signal-orange);
-    color: var(--deep-charcoal);
-    text-decoration: none;
-    font-family: "Rajdhani", sans-serif;
-    font-weight: 700;
-    border-radius: 4px;
-}
-
-.product-button:hover,
-.product-button:focus {
-    background-color: var(--off-white);
-    color: var(--deep-charcoal);
 }
 
 .product-table {
@@ -346,15 +464,6 @@ footer {
     color: var(--technical-blue);
 }
 
-
-/* Tablet and Desktop Product Layout */
-
-@media (min-width: 768px) {
-
-    .product-detail {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
 
 /* ========================================
    CUSTOM PRINT PAGE
@@ -383,6 +492,11 @@ footer {
     margin-top: 0;
 }
 
+
+/* ========================================
+   FORM STYLES
+======================================== */
+
 .form-group {
     display: flex;
     flex-direction: column;
@@ -405,6 +519,20 @@ footer {
     background-color: var(--deep-charcoal);
     color: var(--off-white);
     font-family: "Inter", Arial, sans-serif;
+    font-size: 1rem;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #9CA3AF;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--technical-blue);
+    outline: 2px solid var(--technical-blue);
+    outline-offset: 2px;
 }
 
 .form-group textarea {
@@ -421,6 +549,24 @@ footer {
     margin-top: 5px;
 }
 
+
+/* ========================================
+   FORM STATUS MESSAGES
+======================================== */
+
+#contactMessage,
+#checkoutMessage,
+.coupon-message {
+    margin-top: 15px;
+    color: var(--technical-blue);
+    font-weight: 600;
+}
+
+
+/* ========================================
+   PRINT GUIDELINES
+======================================== */
+
 .print-guidelines ul {
     padding-left: 20px;
 }
@@ -435,15 +581,6 @@ footer {
     border-top: 1px solid #475569;
 }
 
-
-/* Tablet and Desktop Custom Print Layout */
-
-@media (min-width: 768px) {
-
-    .custom-print-layout {
-        grid-template-columns: 2fr 1fr;
-    }
-}
 
 /* ========================================
    BUILDER RESOURCES PAGE
@@ -481,15 +618,6 @@ footer {
     margin-bottom: 8px;
 }
 
-
-/* Tablet */
-
-@media (min-width: 768px) {
-
-    .resource-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
 
 /* ========================================
    SHOPPING CART PAGE
@@ -553,21 +681,72 @@ footer {
 }
 
 
-/* Tablet and Desktop */
+/* ========================================
+   CART CONTROLS
+======================================== */
 
-@media (min-width: 768px) {
-
-    .cart-layout {
-        grid-template-columns: 2fr 1fr;
-        align-items: start;
-    }
-
-    .cart-item {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-start;
-    }
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
 }
+
+.quantity-button {
+    min-width: 30px;
+    padding: 4px 9px;
+    background-color: var(--signal-orange);
+    color: var(--deep-charcoal);
+    border: none;
+    border-radius: 4px;
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.quantity-button:hover,
+.quantity-button:focus {
+    background-color: var(--off-white);
+}
+
+.quantity-value {
+    min-width: 20px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.remove-cart-item {
+    margin-top: 12px;
+    padding: 0;
+    background: transparent;
+    color: var(--technical-blue);
+    border: none;
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 0.95rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.remove-cart-item:hover,
+.remove-cart-item:focus {
+    color: var(--off-white);
+}
+
+.quantity-button:focus-visible,
+.remove-cart-item:focus-visible {
+    outline: 2px solid var(--signal-orange);
+    outline-offset: 3px;
+}
+
+.cart-item-total {
+    min-width: 120px;
+}
+
+.cart-item-total>p:first-child {
+    margin-top: 0;
+}
+
 
 /* ========================================
    CHECKOUT PAGE
@@ -594,6 +773,10 @@ footer {
 .checkout-form h2,
 .checkout-summary h2 {
     margin-top: 0;
+}
+
+.checkout-form section {
+    margin-bottom: 35px;
 }
 
 .checkout-row {
@@ -625,20 +808,10 @@ footer {
     color: var(--technical-blue);
 }
 
-
-/* Tablet and Desktop */
-
-@media (min-width: 768px) {
-
-    .checkout-layout {
-        grid-template-columns: 2fr 1fr;
-        align-items: start;
-    }
-
-    .checkout-row {
-        grid-template-columns: repeat(2, 1fr);
-    }
+.coupon-button {
+    padding-left: 0;
 }
+
 
 /* ========================================
    ORDER CONFIRMATION PAGE
@@ -689,27 +862,131 @@ footer {
     gap: 15px;
 }
 
-.secondary-button {
-    display: inline-block;
-    padding: 12px 24px;
-    color: var(--technical-blue);
-    text-decoration: none;
-    font-family: "Rajdhani", sans-serif;
-    font-weight: 700;
+
+/* ========================================
+   FOOTER
+======================================== */
+
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+    background-color: var(--steel-gray);
 }
 
-.secondary-button:hover,
-.secondary-button:focus {
+footer p {
+    margin: 6px 0;
+    text-align: center;
+}
+
+footer a {
+    color: var(--technical-blue);
+    font-family: "Inter", Arial, sans-serif;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+footer a:hover,
+footer a:focus {
     color: var(--off-white);
 }
 
+footer a:focus-visible {
+    outline: 2px solid var(--signal-orange);
+    outline-offset: 4px;
+}
 
-/* Tablet and Desktop */
+
+/* ========================================
+   RESPONSIVE LAYOUT
+======================================== */
+
+
+/* Tablet */
 
 @media (min-width: 768px) {
+
+    .category-grid,
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .product-detail {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .custom-print-layout {
+        grid-template-columns: 2fr 1fr;
+    }
+
+    .resource-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cart-layout {
+        grid-template-columns: 2fr 1fr;
+        align-items: start;
+    }
+
+    .cart-item {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .checkout-layout {
+        grid-template-columns: 2fr 1fr;
+        align-items: start;
+    }
+
+    .checkout-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
     .confirmation-actions {
         flex-direction: row;
         justify-content: center;
+    }
+}
+
+
+/* Desktop */
+
+@media (min-width: 1024px) {
+
+    .category-grid,
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+/* Small Screens */
+
+@media (max-width: 767px) {
+
+    .hero {
+        padding: 40px 10px;
+    }
+
+    .hero h2 {
+        font-size: 2.1rem;
+    }
+
+    .shipping-banner {
+        padding: 10px 15px;
+        font-size: 1.15rem;
+    }
+
+    .product-actions {
+        gap: 15px;
+    }
+
+    .summary-row {
+        gap: 10px;
+    }
+
+    button.add-to-cart.product-page-add-to-cart {
+        font-size: 1.15rem;
     }
 }
