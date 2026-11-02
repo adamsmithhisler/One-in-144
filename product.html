@@ -4,51 +4,124 @@
 <head>
     <!--
         Author: Adam Smithhisler
-        Date: 10/27/2026
-        Assignment: Final Project - Interactive E-Commerce Features
-        Purpose: Product details page for the One in 144 e-commerce website.
+        Date: 11/1/2026
+        Assignment: SDC260 Final Project - Week 4
+        Purpose: Product details page for the One in 144
+                 e-commerce website. Displays product
+                 information, specifications, inventory,
+                 shopping cart controls, and recommended
+                 products using shared JavaScript.
     -->
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta name="description"
+        content="Explore the HG 1/144 Urban Combat Model Kit at One in 144. View specifications, check inventory, and add the model kit to your shopping cart.">
+
     <title>HG 1/144 Urban Combat Model Kit | One in 144</title>
 
+    <!-- ========================================
+         FONTS
+    ========================================= -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Michroma&family=Rajdhani:wght@500;600;700&display=swap"
         rel="stylesheet">
 
+    <!-- ========================================
+         STYLESHEET
+    ========================================= -->
+
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- ========================================
+         SHARED JAVASCRIPT
+    ========================================= -->
+
+    <script src="js/script.js" defer></script>
+
 </head>
 
 <body>
 
+    <!-- ========================================
+         HEADER AND NAVIGATION
+    ========================================= -->
+
     <header>
+
         <div class="header-content">
 
             <h1>One in 144</h1>
+
             <p>One Build. 144 Possibilities.</p>
 
             <nav aria-label="Main navigation">
-                <a href="index.html">Home</a>
-                <a href="shop.html">Shop</a>
-                <a href="custom-print.html">Custom Print</a>
-                <a href="resources.html">Builder Resources</a>
-                <a href="contact.html">Contact</a>
-                <a href="cart.html">Cart</a>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="shop.html">
+                    Shop
+                </a>
+
+                <a href="custom-print.html">
+                    Custom Print
+                </a>
+
+                <a href="resources.html">
+                    Builder Resources
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
             </nav>
 
+            <!-- ========================================
+                 CART SUMMARY
+            ========================================= -->
+
+            <div class="header-cart-summary" id="headerCartSummary" aria-live="polite">
+
+                <span>
+                    Cart Items:
+                    <strong id="homeCartCount">0</strong>
+                </span>
+
+                <span>
+                    Subtotal:
+                    <strong id="homeCartSubtotal">$0.00</strong>
+                </span>
+
+                <a href="cart.html">
+                    View Cart
+                </a>
+
+            </div>
+
         </div>
+
     </header>
 
+    <!-- ========================================
+         FREE SHIPPING BANNER
+    ========================================= -->
 
     <div class="shipping-banner" role="status">
         FREE SHIPPING ON ORDERS $75 AND UP
     </div>
 
+    <!-- ========================================
+         MAIN CONTENT
+    ========================================= -->
 
     <main>
 
@@ -58,50 +131,118 @@
 
         <section class="hero">
 
-            <p>MODEL KIT • 1/144 SCALE</p>
+            <p>
+                MODEL KIT • 1/144 SCALE
+            </p>
 
-            <h2>HG 1/144 Urban Combat Model Kit</h2>
+            <h2>
+                HG 1/144 Urban Combat Model Kit
+            </h2>
 
             <p>
-                A versatile 1/144-scale model kit designed for
-                customization, kitbashing, and detailed display builds.
+                A versatile 1/144-scale model kit designed
+                for customization, kitbashing, and detailed
+                display builds.
             </p>
 
         </section>
-
 
         <!-- ========================================
              PRODUCT DETAILS
         ========================================= -->
 
-        <section class="product-detail">
+        <section class="product-detail" aria-label="Product details">
 
-            <article class="category-card product-info">
+            <!-- ========================================
+                 PRODUCT INFORMATION
+            ========================================= -->
+
+            <article class="category-card product-info" id="productDetails" data-product-id="KIT-001">
 
                 <h2>Product Information</h2>
 
                 <p>
-                    This kit provides a strong foundation for builders
-                    who want to customize armor, weapons, mechanical
-                    details, or display environments.
+                    This kit provides a strong foundation
+                    for builders who want to customize
+                    armor, weapons, mechanical details,
+                    or display environments.
                 </p>
 
-                <p class="product-price">
+                <!-- Product price -->
+                <p class="product-price" id="productPrice">
                     $24.99
                 </p>
 
-                <p>
+                <!-- ========================================
+                     INVENTORY AVAILABILITY
+                ========================================= -->
+
+                <!--
+                    WEEK 4 INVENTORY MANAGEMENT
+
+                    JavaScript will retrieve the available
+                    stock for product KIT-001 from the shared
+                    inventory stored in localStorage.
+
+                    This display must update when:
+                    - A product is added to the cart
+                    - Cart quantities are changed
+                    - A product is removed from the cart
+                    - The entire cart is cleared
+                    - The page is refreshed
+                -->
+
+                <p class="product-availability" id="productAvailability" aria-live="polite">
+
                     <strong>Availability:</strong>
-                    18 in stock
+
+                    <span id="productStock">
+                        18
+                    </span>
+
+                    <span id="productStockLabel">
+                        in stock
+                    </span>
+
                 </p>
 
+                <!-- ========================================
+                     ADD TO CART
+                ========================================= -->
 
-                <button type="button" class="add-to-cart product-page-add-to-cart" data-product-id="KIT-001">
+                <!--
+                    This button retains the existing
+                    add-to-cart class and data-product-id
+                    used by js/script.js.
+
+                    WEEK 4:
+                    JavaScript will disable the button when
+                    product stock reaches zero.
+                -->
+
+                <button type="button" id="productAddToCart" class="add-to-cart product-page-add-to-cart"
+                    data-product-id="KIT-001">
+
                     Add to Cart
+
                 </button>
+
+                <!--
+                    Displayed when the product is unavailable.
+                    JavaScript controls its visibility.
+                -->
+
+                <p id="productOutOfStockMessage" class="out-of-stock-message" role="status" hidden>
+
+                    This product is currently out of stock.
+
+                </p>
 
             </article>
 
+            <!-- ========================================
+                 PRODUCT SPECIFICATIONS
+            ========================================= -->
 
             <article class="category-card">
 
@@ -112,33 +253,47 @@
                     <tbody>
 
                         <tr>
-                            <th scope="row">Product ID</th>
+                            <th scope="row">
+                                Product ID
+                            </th>
                             <td>KIT-001</td>
                         </tr>
 
                         <tr>
-                            <th scope="row">Category</th>
+                            <th scope="row">
+                                Category
+                            </th>
                             <td>Model Kits</td>
                         </tr>
 
                         <tr>
-                            <th scope="row">Scale</th>
+                            <th scope="row">
+                                Scale
+                            </th>
                             <td>1/144</td>
                         </tr>
 
                         <tr>
-                            <th scope="row">Skill Level</th>
+                            <th scope="row">
+                                Skill Level
+                            </th>
                             <td>Beginner</td>
                         </tr>
 
                         <tr>
-                            <th scope="row">Material</th>
+                            <th scope="row">
+                                Material
+                            </th>
                             <td>Injection-Molded Plastic</td>
                         </tr>
 
                         <tr>
-                            <th scope="row">Stock</th>
-                            <td>18</td>
+                            <th scope="row">
+                                Stock
+                            </th>
+                            <td id="productTableStock">
+                                18
+                            </td>
                         </tr>
 
                     </tbody>
@@ -149,24 +304,31 @@
 
         </section>
 
-
         <!-- ========================================
              RECOMMENDED PRODUCTS
         ========================================= -->
 
-        <section>
+        <section aria-labelledby="recommended-heading">
 
-            <h2>Recommended for This Build</h2>
+            <h2 id="recommended-heading">
+                Recommended for This Build
+            </h2>
 
             <div class="product-grid">
 
-                <article class="product-card">
+                <!-- ========================================
+                     MECHANICAL DETAIL PACK
+                ========================================= -->
 
-                    <h3>1/144 Mechanical Detail Pack</h3>
+                <article class="product-card" data-featured-id="KBP-014">
+
+                    <h3>
+                        1/144 Mechanical Detail Pack
+                    </h3>
 
                     <p>
-                        Add vents, armor details, thrusters, piping,
-                        and other mechanical components.
+                        Add vents, armor details, thrusters,
+                        piping, and other mechanical components.
                     </p>
 
                     <p>
@@ -179,14 +341,19 @@
 
                 </article>
 
+                <!-- ========================================
+                     URBAN RUIN DISPLAY BASE
+                ========================================= -->
 
-                <article class="product-card">
+                <article class="product-card" data-featured-id="DIO-003">
 
-                    <h3>Urban Ruin Display Base</h3>
+                    <h3>
+                        Urban Ruin Display Base
+                    </h3>
 
                     <p>
-                        Create a matching urban environment for
-                        the completed model.
+                        Create a matching urban environment
+                        for the completed model.
                     </p>
 
                     <p>
@@ -199,14 +366,19 @@
 
                 </article>
 
+                <!-- ========================================
+                     WEATHERING STARTER PACK
+                ========================================= -->
 
-                <article class="product-card">
+                <article class="product-card" data-featured-id="WTH-005">
 
-                    <h3>Weathering Starter Pack</h3>
+                    <h3>
+                        Weathering Starter Pack
+                    </h3>
 
                     <p>
-                        Add realistic dirt, wear, grime, and
-                        environmental effects.
+                        Add realistic dirt, wear, grime,
+                        and environmental effects.
                     </p>
 
                     <p>
@@ -225,6 +397,49 @@
 
     </main>
 
+    <!-- ========================================
+         ADD TO CART NOTIFICATION
+    ========================================= -->
+
+    <!--
+        WEEK 4 VISUAL FEEDBACK
+
+        JavaScript will display a temporary notification
+        after a product has been added successfully.
+
+        The notification supplements the cart count
+        and subtotal changes in the navigation.
+    -->
+
+    <div id="cartNotification" class="cart-notification" role="status" aria-live="polite" aria-atomic="true" hidden>
+
+        Product added to your cart.
+
+    </div>
+
+    <!-- ========================================
+         OUT OF STOCK TOOLTIP
+    ========================================= -->
+
+    <!--
+        WEEK 4 INVENTORY AWARENESS
+
+        JavaScript will show this tooltip when the cursor
+        moves over an unavailable product.
+
+        The Add to Cart button will be disabled when
+        stock reaches zero.
+    -->
+
+    <div id="outOfStockTooltip" class="out-of-stock-tooltip" role="tooltip" hidden>
+
+        Out of Stock
+
+    </div>
+
+    <!-- ========================================
+         FOOTER
+    ========================================= -->
 
     <footer>
 
@@ -239,9 +454,6 @@
         </p>
 
     </footer>
-
-
-    <script src="js/script.js"></script>
 
 </body>
 

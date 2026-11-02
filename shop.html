@@ -4,16 +4,25 @@
 <head>
     <!--
         Author: Adam Smithhisler
-        Date: 10/27/2026
-        Assignment: Final Project - Interactive E-Commerce Features
+        Date: 11/1/2026
+        Assignment: SDC260 Final Project - Week 4
         Purpose: Shop page for the One in 144 e-commerce website.
-                 Products are dynamically displayed using JavaScript.
+                 Dynamically displays the product catalog and
+                 supports shopping cart interactions, persistent
+                 inventory, stock availability, and visual feedback.
     -->
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta name="description"
+        content="Shop 1/144-scale model kits, kitbash parts, diorama supplies, weathering materials, lighting, and hobby tools at One in 144.">
+
     <title>Shop | One in 144</title>
+
+    <!-- ========================================
+         FONTS
+    ========================================= -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,31 +31,96 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Michroma&family=Rajdhani:wght@500;600;700&display=swap"
         rel="stylesheet">
 
+    <!-- ========================================
+         STYLESHEET
+    ========================================= -->
+
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- ========================================
+         SHARED JAVASCRIPT
+    ========================================= -->
+
+    <script src="js/script.js" defer></script>
+
 </head>
 
 <body>
 
+    <!-- ========================================
+         HEADER AND NAVIGATION
+    ========================================= -->
+
     <header>
+
         <div class="header-content">
 
             <h1>One in 144</h1>
+
             <p>One Build. 144 Possibilities.</p>
 
             <nav aria-label="Main navigation">
-                <a href="index.html">Home</a>
-                <a href="shop.html" aria-current="page">Shop</a>
-                <a href="custom-print.html">Custom Print</a>
-                <a href="resources.html">Builder Resources</a>
-                <a href="cart.html">Cart</a>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="shop.html" aria-current="page">
+                    Shop
+                </a>
+
+                <a href="custom-print.html">
+                    Custom Print
+                </a>
+
+                <a href="resources.html">
+                    Builder Resources
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
+
             </nav>
 
+            <!-- ========================================
+                 CART SUMMARY
+            ========================================= -->
+
+            <div class="header-cart-summary" id="headerCartSummary" aria-live="polite">
+
+                <span>
+                    Cart Items:
+                    <strong id="homeCartCount">0</strong>
+                </span>
+
+                <span>
+                    Subtotal:
+                    <strong id="homeCartSubtotal">$0.00</strong>
+                </span>
+
+                <a href="cart.html">
+                    View Cart
+                </a>
+
+            </div>
+
         </div>
+
     </header>
+
+    <!-- ========================================
+         FREE SHIPPING BANNER
+    ========================================= -->
 
     <div class="shipping-banner" role="status">
         FREE SHIPPING ON ORDERS $75 AND UP
     </div>
+
+    <!-- ========================================
+         MAIN CONTENT
+    ========================================= -->
 
     <main>
 
@@ -56,9 +130,13 @@
 
         <section class="hero">
 
-            <p>MODEL KITS • PARTS • TOOLS</p>
+            <p>
+                MODEL KITS • PARTS • TOOLS
+            </p>
 
-            <h2>Shop One in 144</h2>
+            <h2>
+                Shop One in 144
+            </h2>
 
             <p>
                 Browse 1/144-scale model kits, kitbashing parts,
@@ -68,16 +146,19 @@
 
         </section>
 
-
         <!-- ========================================
-             SHOP CATEGORIES
+             SHOP BY CATEGORY
         ========================================= -->
 
-        <section>
+        <section aria-labelledby="categories-heading">
 
-            <h2>Shop by Category</h2>
+            <h2 id="categories-heading">
+                Shop by Category
+            </h2>
 
             <div class="category-grid">
+
+                <!-- MODEL KITS -->
 
                 <article class="category-card">
 
@@ -90,6 +171,7 @@
 
                 </article>
 
+                <!-- KITBASH PARTS -->
 
                 <article class="category-card">
 
@@ -102,6 +184,7 @@
 
                 </article>
 
+                <!-- DIORAMA SUPPLIES -->
 
                 <article class="category-card">
 
@@ -114,10 +197,11 @@
 
                 </article>
 
+                <!-- WEATHERING AND LIGHTING -->
 
                 <article class="category-card">
 
-                    <h3>Weathering & Lighting</h3>
+                    <h3>Weathering &amp; Lighting</h3>
 
                     <p>
                         Pigments, washes, weathering materials,
@@ -126,6 +210,7 @@
 
                 </article>
 
+                <!-- TOOLS -->
 
                 <article class="category-card">
 
@@ -142,35 +227,106 @@
 
         </section>
 
-
         <!-- ========================================
-             DYNAMIC PRODUCT DISPLAY
+             DYNAMIC PRODUCT CATALOG
         ========================================= -->
 
-        <section>
+        <section aria-labelledby="products-heading">
 
-            <h2>Featured Products</h2>
+            <h2 id="products-heading">
+                Featured Products
+            </h2>
 
             <p class="section-description">
                 Browse the current One in 144 product catalog.
+                Check product availability before adding items
+                to your next build.
             </p>
 
             <!--
-                Product cards are generated dynamically
-                by js/script.js.
+                WEEK 4 PRODUCT AND INVENTORY DISPLAY
+
+                Product cards are generated dynamically by
+                js/script.js using the existing ten-product array.
+
+                Each card will include:
+                - Product name and description
+                - Product category
+                - Product price
+                - Current available inventory
+                - View Product link
+                - Add to Cart button
+
+                Stock-aware behavior will be handled in JavaScript.
+
+                When stock reaches zero:
+                - The product is marked Out of Stock
+                - The Add to Cart button is disabled
+                - The cursor tooltip displays Out of Stock
+
+                Inventory and shopping cart information will be
+                saved using localStorage to survive page refreshes.
             -->
+
             <div class="product-grid" id="productContainer">
+
+                <!-- Product cards inserted by JavaScript -->
+
             </div>
 
         </section>
 
     </main>
 
+    <!-- ========================================
+         ADD TO CART NOTIFICATION
+    ========================================= -->
+
+    <!--
+        WEEK 4 VISUAL FEEDBACK
+
+        This element will be shown temporarily when a customer
+        successfully adds a product to the shopping cart.
+
+        JavaScript will update the text and visibility.
+
+        The notification will supplement the cart count and
+        subtotal updates without interrupting the customer.
+    -->
+
+    <div id="cartNotification" class="cart-notification" role="status" aria-live="polite" aria-atomic="true" hidden>
+
+        Product added to your cart.
+
+    </div>
+
+    <!-- ========================================
+         OUT OF STOCK TOOLTIP
+    ========================================= -->
+
+    <!--
+        WEEK 4 INVENTORY AWARENESS
+
+        JavaScript will position this tooltip near the cursor
+        when hovering over an unavailable product card.
+    -->
+
+    <div id="outOfStockTooltip" class="out-of-stock-tooltip" role="tooltip" hidden>
+
+        Out of Stock
+
+    </div>
+
+    <!-- ========================================
+         FOOTER
+    ========================================= -->
 
     <footer>
 
         <p>
-            <a href="contact.html">Contact Us</a>
+            <a href="contact.html">
+                Contact Us
+            </a>
         </p>
 
         <p>
@@ -178,13 +334,6 @@
         </p>
 
     </footer>
-
-
-    <!-- ========================================
-         JAVASCRIPT
-    ========================================= -->
-
-    <script src="js/script.js"></script>
 
 </body>
 

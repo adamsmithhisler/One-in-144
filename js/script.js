@@ -1,1549 +1,824 @@
 /*
     Author: Adam Smithhisler
-    Date: 10/27/2026
-    Assignment: Final Project - Interactive E-Commerce Features
-    Purpose: Provides dynamic product display, shopping cart behavior,
-             automatic pricing, shipping calculation, coupon discounts,
-             checkout validation, contact form validation, and dynamic
-             order confirmation for the One in 144 website.
+    Date: 11/1/2026
+    Assignment: SDC260 Final Project - Week 4
+    Purpose: Shared catalog, persistent inventory and shopping cart,
+             cart notifications, checkout, confirmation, and form validation.
 */
 
-
 /* ========================================
-   PRODUCT DATA
+   PRODUCT CATALOG AND SETTINGS
 ======================================== */
 
 const products = [
-    {
-        id: "KIT-001",
-        name: "HG 1/144 Urban Combat Model Kit",
-        category: "Model Kits",
-        price: 24.99,
-        stock: 18,
-        description: "Beginner-friendly model kit designed for customization and diorama builds."
-    },
-    {
-        id: "KBP-014",
-        name: "1/144 Mechanical Detail Pack",
-        category: "Kitbash Parts",
-        price: 14.99,
-        stock: 32,
-        description: "Resin mechanical details including vents, thrusters, armor panels, and piping."
-    },
-    {
-        id: "DIO-003",
-        name: "Urban Ruin Display Base",
-        category: "Diorama Supplies",
-        price: 19.99,
-        stock: 15,
-        description: "Modular urban terrain pieces designed for 1/144-scale displays."
-    },
-    {
-        id: "TLS-008",
-        name: "Precision Hobby Tool Set",
-        category: "Tools",
-        price: 29.99,
-        stock: 20,
-        description: "Basic modeling tool set with nippers, tweezers, sanding tools, and a hobby knife."
-    },
-    {
-        id: "WTH-005",
-        name: "Weathering Starter Pack",
-        category: "Weathering & Lighting",
-        price: 17.99,
-        stock: 24,
-        description: "Pigments and washes for adding wear, grime, and environmental effects."
-    },
-    {
-        id: "LED-011",
-        name: "1/144 LED Lighting Kit",
-        category: "Weathering & Lighting",
-        price: 12.99,
-        stock: 27,
-        description: "Small LED components and wiring for illuminated model and diorama projects."
-    },
-    {
-        id: "KBP-021",
-        name: "Heavy Weapon Upgrade Set",
-        category: "Kitbash Parts",
-        price: 18.99,
-        stock: 16,
-        description: "A collection of rifles, launchers, and mounting components for custom builds."
-    },
-    {
-        id: "DIO-009",
-        name: "Industrial Hangar Detail Set",
-        category: "Diorama Supplies",
-        price: 22.99,
-        stock: 12,
-        description: "Panels, pipes, barriers, and industrial details for hangar-style displays."
-    },
-    {
-        id: "TLS-015",
-        name: "Fine Detail Sanding Set",
-        category: "Tools",
-        price: 9.99,
-        stock: 35,
-        description: "Multiple sanding grits designed for cleanup, shaping, and surface preparation."
-    },
-    {
-        id: "KIT-017",
-        name: "HG 1/144 Desert Operations Model Kit",
-        category: "Model Kits",
-        price: 27.99,
-        stock: 14,
-        description: "1/144-scale model kit designed around desert combat and weathering themes."
-    }
+    { id: "KIT-001", name: "HG 1/144 Urban Combat Model Kit", category: "Model Kits", price: 24.99, stock: 18, description: "Beginner-friendly model kit designed for customization and diorama builds." },
+    { id: "KBP-014", name: "1/144 Mechanical Detail Pack", category: "Kitbash Parts", price: 14.99, stock: 32, description: "Resin mechanical details including vents, thrusters, armor panels, and piping." },
+    { id: "DIO-003", name: "Urban Ruin Display Base", category: "Diorama Supplies", price: 19.99, stock: 15, description: "Modular urban terrain pieces designed for 1/144-scale displays." },
+    { id: "TLS-008", name: "Precision Hobby Tool Set", category: "Tools", price: 29.99, stock: 20, description: "Basic modeling tool set with nippers, tweezers, sanding tools, and a hobby knife." },
+    { id: "WTH-005", name: "Weathering Starter Pack", category: "Weathering & Lighting", price: 17.99, stock: 24, description: "Pigments and washes for adding wear, grime, and environmental effects." },
+    { id: "LED-011", name: "1/144 LED Lighting Kit", category: "Weathering & Lighting", price: 12.99, stock: 27, description: "Small LED components and wiring for illuminated model and diorama projects." },
+    { id: "KBP-021", name: "Heavy Weapon Upgrade Set", category: "Kitbash Parts", price: 18.99, stock: 16, description: "A collection of rifles, launchers, and mounting components for custom builds." },
+    { id: "DIO-009", name: "Industrial Hangar Detail Set", category: "Diorama Supplies", price: 22.99, stock: 12, description: "Panels, pipes, barriers, and industrial details for hangar-style displays." },
+    { id: "TLS-015", name: "Fine Detail Sanding Set", category: "Tools", price: 9.99, stock: 35, description: "Multiple sanding grits designed for cleanup, shaping, and surface preparation." },
+    { id: "KIT-017", name: "HG 1/144 Desert Operations Model Kit", category: "Model Kits", price: 27.99, stock: 14, description: "1/144-scale model kit designed around desert combat and weathering themes." }
 ];
 
+const CART_KEY = "oneIn144Cart";
+const INVENTORY_KEY = "oneIn144Inventory";
+const LAST_ORDER_KEY = "oneIn144LastOrder";
+const FREE_SHIPPING_MINIMUM = 75;
+const STANDARD_SHIPPING = 6.99;
+const coupons = { BUILD10: 10, SCALE15: 15 };
+let activeDiscountPercent = 0;
+let notificationTimeout;
+
+function money(amount) {
+    return `$${Number(amount).toFixed(2)}`;
+}
+
+function findProduct(productId) {
+    return products.find(product => product.id === productId);
+}
 
 /* ========================================
-   CART STORAGE
+   PERSISTENT CART AND INVENTORY
 ======================================== */
 
 function getCart() {
-
-    const savedCart =
-        localStorage.getItem("oneIn144Cart");
-
-
-    if (!savedCart) {
-        return [];
-    }
-
-
     try {
-
-        return JSON.parse(savedCart);
-
+        const saved = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
+        return Array.isArray(saved) ? saved.filter(item =>
+            findProduct(item.id) && Number.isInteger(item.quantity) && item.quantity > 0
+        ) : [];
     } catch (error) {
-
         return [];
     }
 }
-
 
 function saveCart(cart) {
-
-    localStorage.setItem(
-        "oneIn144Cart",
-        JSON.stringify(cart)
-    );
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
 }
 
+function getInventory() {
+    try {
+        const inventory = JSON.parse(localStorage.getItem(INVENTORY_KEY));
+        if (inventory && typeof inventory === "object" && !Array.isArray(inventory)) {
+            return inventory;
+        }
+    } catch (error) {
+        // Invalid saved inventory is replaced with initial stock.
+    }
+
+    // First Week 4 visit: reserve products already in the Week 3 cart.
+    // This migration prevents an existing cart from counting as extra stock.
+    const cart = getCart();
+    const inventory = {};
+    products.forEach(product => {
+        const reserved = cart
+            .filter(item => item.id === product.id)
+            .reduce((total, item) => total + item.quantity, 0);
+        inventory[product.id] = Math.max(0, product.stock - reserved);
+    });
+    saveInventory(inventory);
+    return inventory;
+}
+
+function saveInventory(inventory) {
+    localStorage.setItem(INVENTORY_KEY, JSON.stringify(inventory));
+}
+
+function availableStock(productId) {
+    const product = findProduct(productId);
+    if (!product) return 0;
+    const saved = getInventory()[productId];
+    return Number.isInteger(saved) ? Math.max(0, saved) : product.stock;
+}
+
+function adjustStock(productId, change) {
+    const product = findProduct(productId);
+    if (!product) return false;
+    const inventory = getInventory();
+    const current = availableStock(productId);
+    const next = current + change;
+    if (next < 0 || next > product.stock) return false;
+    inventory[productId] = next;
+    saveInventory(inventory);
+    return true;
+}
+
+function calculateCartSubtotal(cart) {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+}
+
+function calculateCartItemCount(cart) {
+    return cart.reduce((total, item) => total + item.quantity, 0);
+}
 
 /* ========================================
-   PRODUCT DISPLAY
+   FLOATING QUICK CART (WEEK 4)
+
+   The cart button and expandable panel are created once
+   by JavaScript, so the same cart works on all nine pages
+   without editing every HTML file again.
 ======================================== */
 
-const productContainer =
-    document.getElementById("productContainer");
+function initializeQuickCart() {
+    if (document.getElementById("quickCartRoot")) return;
 
-
-if (productContainer) {
-
-    products.forEach(function (product) {
-
-        productContainer.innerHTML += `
-            <article class="product-card">
-
-                <h3>${product.name}</h3>
-
-                <p>
-                    ${product.description}
-                </p>
-
-                <p>
-                    <strong>Category:</strong>
-                    ${product.category}
-                </p>
-
-                <p>
-                    <strong>Stock:</strong>
-                    ${product.stock}
-                </p>
-
-                <p>
-                    <strong>
-                        $${product.price.toFixed(2)}
-                    </strong>
-                </p>
-
-                <div class="product-actions">
-
-                    <a href="product.html">
-                        View Product
-                    </a>
-
-                    <button
-                        type="button"
-                        class="add-to-cart"
-                        data-product-id="${product.id}">
-                        Add to Cart
-                    </button>
-
+    const widget = document.createElement("div");
+    widget.id = "quickCartRoot";
+    widget.className = "quick-cart-root";
+    widget.innerHTML = `
+        <section id="quickCartPanel" class="quick-cart-panel"
+                 aria-label="Quick shopping cart" hidden>
+            <div class="quick-cart-panel-header">
+                <div>
+                    <h2>Shopping Cart</h2>
+                    <p>Review items without leaving this page.</p>
                 </div>
+                <button id="quickCartClose" class="quick-cart-close"
+                        type="button" aria-label="Close shopping cart">&times;</button>
+            </div>
+            <div id="quickCartItems" class="quick-cart-items"></div>
+            <div class="quick-cart-panel-footer">
+                <div class="quick-cart-total-row">
+                    <span>Items</span>
+                    <strong id="quickCartCount">0</strong>
+                </div>
+                <div class="quick-cart-total-row quick-cart-total-price">
+                    <span>Subtotal</span>
+                    <strong id="quickCartSubtotal">$0.00</strong>
+                </div>
+                <p class="quick-cart-shipping">Shipping and coupons are calculated at checkout.</p>
+                <a id="quickCartCheckout" class="quick-cart-checkout" href="checkout.html">
+                    Proceed to Checkout
+                </a>
+                <div class="quick-cart-secondary-actions">
+                    <button id="quickCartClearButton" type="button">Clear Cart</button>
+                    <a href="cart.html">View Full Cart</a>
+                </div>
+            </div>
+        </section>
+        <button id="quickCartToggle" class="quick-cart-toggle" type="button"
+                aria-controls="quickCartPanel" aria-expanded="false">
+            <span class="quick-cart-toggle-label">Cart</span>
+            <span id="quickCartToggleCount" class="quick-cart-toggle-count">0</span>
+            <span id="quickCartToggleTotal" class="quick-cart-toggle-total">$0.00</span>
+            <span id="quickCartToggleArrow" class="quick-cart-toggle-arrow"
+                  aria-hidden="true">&#9650;</span>
+        </button>`;
+    document.body.appendChild(widget);
 
-            </article>
-        `;
+    document.getElementById("quickCartToggle").addEventListener("click", () => {
+        setQuickCartOpen(document.getElementById("quickCartPanel").hidden);
+    });
+    document.getElementById("quickCartClose").addEventListener("click", () => {
+        setQuickCartOpen(false);
+        document.getElementById("quickCartToggle").focus();
+    });
+    document.getElementById("quickCartClearButton").addEventListener("click", clearCart);
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && !document.getElementById("quickCartPanel").hidden) {
+            setQuickCartOpen(false);
+            document.getElementById("quickCartToggle").focus();
+        }
     });
 }
 
+function setQuickCartOpen(isOpen) {
+    const panel = document.getElementById("quickCartPanel");
+    const toggle = document.getElementById("quickCartToggle");
+    const arrow = document.getElementById("quickCartToggleArrow");
+    if (!panel || !toggle) return;
+    panel.hidden = !isOpen;
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    toggle.setAttribute("aria-label", isOpen ? "Collapse shopping cart" : "Expand shopping cart");
+    if (arrow) arrow.innerHTML = isOpen ? "&#9660;" : "&#9650;";
+}
+
+function renderQuickCart() {
+    const container = document.getElementById("quickCartItems");
+    if (!container) return;
+
+    const cart = getCart();
+    const count = calculateCartItemCount(cart);
+    const subtotal = money(calculateCartSubtotal(cart));
+    const previousScroll = container.scrollTop;
+
+    if (!cart.length) {
+        container.innerHTML = `
+            <div class="quick-cart-empty">
+                <p>Your shopping cart is empty.</p>
+                <a href="shop.html">Browse Products</a>
+            </div>`;
+    } else {
+        // All displayed product names and prices come from the fixed catalog.
+        // Buttons reuse the same event-delegated cart actions as cart.html.
+        container.innerHTML = cart.map(item => {
+            const product = findProduct(item.id);
+            const stock = availableStock(item.id);
+            return `
+                <article class="quick-cart-item">
+                    <div class="quick-cart-item-heading">
+                        <h3>${product.name}</h3>
+                        <button type="button" class="remove-cart-item"
+                                data-product-id="${product.id}"
+                                aria-label="Remove ${product.name} from cart">Remove</button>
+                    </div>
+                    <p class="quick-cart-unit-price">${money(product.price)} each</p>
+                    <div class="quick-cart-item-bottom">
+                        <div class="quantity-controls">
+                            <button type="button" class="quantity-button decrease-quantity"
+                                    data-product-id="${product.id}"
+                                    ${item.quantity <= 1 ? "disabled" : ""}
+                                    aria-label="Decrease quantity of ${product.name}">−</button>
+                            <span class="quantity-value">${item.quantity}</span>
+                            <button type="button" class="quantity-button increase-quantity"
+                                    data-product-id="${product.id}"
+                                    ${stock === 0 ? 'disabled title="Out of Stock"' : ""}
+                                    aria-label="Increase quantity of ${product.name}">+</button>
+                        </div>
+                        <strong>${money(item.quantity * product.price)}</strong>
+                    </div>
+                </article>`;
+        }).join("");
+    }
+    container.scrollTop = previousScroll;
+
+    const setText = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+    };
+    setText("quickCartCount", count);
+    setText("quickCartSubtotal", subtotal);
+    setText("quickCartToggleCount", count);
+    setText("quickCartToggleTotal", subtotal);
+
+    const clear = document.getElementById("quickCartClearButton");
+    if (clear) clear.disabled = cart.length === 0;
+    const checkout = document.getElementById("quickCartCheckout");
+    if (checkout) checkout.hidden = cart.length === 0;
+    const toggle = document.getElementById("quickCartToggle");
+    if (toggle) {
+        const open = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-label", `${open ? "Collapse" : "Expand"} shopping cart, ${count} items, ${subtotal}`);
+    }
+}
 
 /* ========================================
-   ADD PRODUCT TO CART
+   SITE-WIDE CART SUMMARY
+======================================== */
+
+function updateHeaderCart() {
+    const cart = getCart();
+    const count = calculateCartItemCount(cart);
+    const subtotal = money(calculateCartSubtotal(cart));
+    ["navCartCount", "homeCartCount"].forEach(id => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = count;
+    });
+    const subtotalElement = document.getElementById("homeCartSubtotal");
+    if (subtotalElement) subtotalElement.textContent = subtotal;
+}
+
+/* ========================================
+   CART NOTIFICATIONS AND STOCK TOOLTIP
+======================================== */
+
+// Visual feedback explains a successful Add to Cart without blocking the page.
+function showCartNotification(message) {
+    const notification = document.getElementById("cartNotification");
+    if (!notification) return;
+
+    clearTimeout(notificationTimeout);
+    notification.textContent = message;
+    notification.hidden = false;
+    notification.classList.add("show");
+    notificationTimeout = setTimeout(() => {
+        notification.classList.remove("show");
+        notification.hidden = true;
+    }, 2500);
+}
+
+function showOutOfStockTooltip(event) {
+    const tooltip = document.getElementById("outOfStockTooltip");
+    if (!tooltip) return;
+    tooltip.textContent = "Out of Stock";
+    tooltip.hidden = false;
+    tooltip.style.position = "fixed";
+    tooltip.style.left = `${Math.min(event.clientX + 14, window.innerWidth - 130)}px`;
+    tooltip.style.top = `${Math.min(event.clientY + 14, window.innerHeight - 40)}px`;
+    tooltip.style.pointerEvents = "none";
+    tooltip.style.zIndex = "9999";
+}
+
+function hideOutOfStockTooltip() {
+    const tooltip = document.getElementById("outOfStockTooltip");
+    if (tooltip) tooltip.hidden = true;
+}
+
+function enableOutOfStockTooltip(card) {
+    if (!card || card.dataset.tooltipReady === "true") return;
+    card.dataset.tooltipReady = "true";
+    // Listen on the card because disabled buttons do not reliably emit hover events.
+    card.addEventListener("mousemove", showOutOfStockTooltip);
+    card.addEventListener("mouseleave", hideOutOfStockTooltip);
+}
+
+/* ========================================
+   PRODUCT CARD RENDERING
+======================================== */
+
+function productCardHTML(product) {
+    const stock = availableStock(product.id);
+    const soldOut = stock === 0;
+    return `
+        <article class="product-card${soldOut ? " out-of-stock" : ""}"
+                 data-product-id="${product.id}"
+                 ${soldOut ? 'title="Out of Stock"' : ""}>
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+            <p><strong>Category:</strong> ${product.category}</p>
+            <p class="product-stock"><strong>Stock:</strong> ${soldOut ? "Out of Stock" : stock}</p>
+            <p><strong>${money(product.price)}</strong></p>
+            <div class="product-actions">
+                <a href="${product.id === "KIT-001" ? "product.html" : "shop.html"}">
+                    ${product.id === "KIT-001" ? "View Product" : "View in Shop"}
+                </a>
+                <button type="button" class="add-to-cart"
+                        data-product-id="${product.id}"
+                        ${soldOut ? 'disabled aria-disabled="true" title="Out of Stock"' : ""}>
+                    ${soldOut ? "Out of Stock" : "Add to Cart"}
+                </button>
+            </div>
+        </article>`;
+}
+
+function renderProducts() {
+    const container = document.getElementById("productContainer");
+    if (!container) return;
+    container.innerHTML = products.map(productCardHTML).join("");
+    container.querySelectorAll(".product-card.out-of-stock").forEach(enableOutOfStockTooltip);
+}
+
+function renderFeaturedProducts() {
+    const container = document.getElementById("featuredProductContainer");
+    if (!container) return;
+    const featuredIds = ["KIT-001", "KBP-014", "DIO-003"];
+    container.innerHTML = featuredIds.map(id => productCardHTML(findProduct(id))).join("");
+    container.querySelectorAll(".product-card.out-of-stock").forEach(enableOutOfStockTooltip);
+}
+
+function renderProductDetails() {
+    const details = document.getElementById("productDetails");
+    if (!details) return;
+    const productId = details.dataset.productId || "KIT-001";
+    const product = findProduct(productId);
+    if (!product) return;
+    const stock = availableStock(productId);
+    const stockText = document.getElementById("productStock");
+    const stockLabel = document.getElementById("productStockLabel");
+    const tableStock = document.getElementById("productTableStock");
+    const price = document.getElementById("productPrice");
+    const button = document.getElementById("productAddToCart");
+    const message = document.getElementById("productOutOfStockMessage");
+
+    if (stockText) stockText.textContent = stock;
+    if (stockLabel) stockLabel.textContent = stock === 0 ? "Out of Stock" : "in stock";
+    if (tableStock) tableStock.textContent = stock;
+    if (price) price.textContent = money(product.price);
+    if (button) {
+        button.disabled = stock === 0;
+        button.textContent = stock === 0 ? "Out of Stock" : "Add to Cart";
+        button.title = stock === 0 ? "Out of Stock" : "";
+    }
+    if (message) message.hidden = stock > 0;
+    details.classList.toggle("out-of-stock", stock === 0);
+    if (stock === 0) enableOutOfStockTooltip(details);
+    else hideOutOfStockTooltip();
+}
+
+function refreshStorefront() {
+    renderProducts();
+    renderFeaturedProducts();
+    renderProductDetails();
+    renderCart();
+    renderCheckout();
+    updateHeaderCart();
+    renderQuickCart();
+}
+
+/* ========================================
+   ADD, UPDATE, REMOVE, AND CLEAR CART
 ======================================== */
 
 function addToCart(productId) {
-
-    const cart =
-        getCart();
-
-
-    const product =
-        products.find(function (item) {
-
-            return item.id === productId;
-
-        });
-
-
-    if (!product) {
+    const product = findProduct(productId);
+    if (!product) return;
+    if (availableStock(productId) < 1) {
+        showCartNotification(`${product.name} is out of stock.`);
         return;
     }
 
+    const cart = getCart();
+    let item = cart.find(entry => entry.id === productId);
+    if (!adjustStock(productId, -1)) return;
 
-    const existingItem =
-        cart.find(function (item) {
-
-            return item.id === productId;
-
-        });
-
-
-    if (existingItem) {
-
-        if (existingItem.quantity < product.stock) {
-
-            existingItem.quantity++;
-
-        } else {
-
-            alert(
-                `Only ${product.stock} of ${product.name} are currently available.`
-            );
-
-            return;
-        }
-
-    } else {
-
-        cart.push({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            quantity: 1
-        });
-    }
-
+    if (item) item.quantity++;
+    else cart.push({ id: product.id, name: product.name, price: product.price, quantity: 1 });
 
     saveCart(cart);
-
-
-    alert(
-        `${product.name} added to cart.`
-    );
+    refreshStorefront();
+    showCartNotification(`${product.name} added to cart.`);
 }
-
-
-/* ========================================
-   ADD TO CART BUTTON EVENTS
-======================================== */
-
-const addToCartButtons =
-    document.querySelectorAll(".add-to-cart");
-
-
-addToCartButtons.forEach(function (button) {
-
-    button.addEventListener(
-        "click",
-        function () {
-
-            const productId =
-                button.dataset.productId;
-
-
-            addToCart(productId);
-
-        }
-    );
-
-});
-
-
-/* ========================================
-   CART TOTAL FUNCTIONS
-======================================== */
-
-function calculateCartSubtotal(cart) {
-
-    let subtotal = 0;
-
-
-    cart.forEach(function (item) {
-
-        subtotal +=
-            item.price * item.quantity;
-
-    });
-
-
-    return subtotal;
-}
-
-
-function calculateCartItemCount(cart) {
-
-    let itemCount = 0;
-
-
-    cart.forEach(function (item) {
-
-        itemCount +=
-            item.quantity;
-
-    });
-
-
-    return itemCount;
-}
-
-
-/* ========================================
-   CART PAGE ELEMENTS
-======================================== */
-
-const cartItems =
-    document.getElementById("cartItems");
-
-const cartItemCount =
-    document.getElementById("cartItemCount");
-
-const cartSubtotal =
-    document.getElementById("cartSubtotal");
-
-const cartTotal =
-    document.getElementById("cartTotal");
-
-const checkoutButton =
-    document.getElementById("checkoutButton");
-
-
-/* ========================================
-   UPDATE CART QUANTITY
-======================================== */
 
 function updateCartQuantity(productId, change) {
+    const cart = getCart();
+    const item = cart.find(entry => entry.id === productId);
+    if (!item || !findProduct(productId) || !Number.isInteger(change)) return;
 
-    const cart =
-        getCart();
-
-
-    const cartItem =
-        cart.find(function (item) {
-
-            return item.id === productId;
-
-        });
-
-
-    const product =
-        products.find(function (item) {
-
-            return item.id === productId;
-
-        });
-
-
-    if (!cartItem || !product) {
-        return;
-    }
-
-
-    const newQuantity =
-        cartItem.quantity + change;
-
-
-    if (newQuantity < 1) {
-        return;
-    }
-
-
-    if (newQuantity > product.stock) {
-
-        alert(
-            `Only ${product.stock} of ${product.name} are currently available.`
-        );
-
-        return;
-    }
-
-
-    cartItem.quantity =
-        newQuantity;
-
+    if (change > 0) {
+        if (availableStock(productId) < change) {
+            showCartNotification("No additional stock is available for this product.");
+            return;
+        }
+        if (!adjustStock(productId, -change)) return;
+        item.quantity += change;
+    } else if (change < 0) {
+        if (item.quantity + change < 1) return;
+        if (!adjustStock(productId, -change)) return;
+        item.quantity += change;
+    } else return;
 
     saveCart(cart);
-
-    renderCart();
+    refreshStorefront();
 }
-
-
-/* ========================================
-   REMOVE PRODUCT FROM CART
-======================================== */
 
 function removeFromCart(productId) {
-
-    const cart =
-        getCart();
-
-
-    const updatedCart =
-        cart.filter(function (item) {
-
-            return item.id !== productId;
-
-        });
-
-
-    saveCart(updatedCart);
-
-    renderCart();
+    const cart = getCart();
+    const item = cart.find(entry => entry.id === productId);
+    if (!item) return;
+    if (!adjustStock(productId, item.quantity)) return;
+    saveCart(cart.filter(entry => entry.id !== productId));
+    refreshStorefront();
+    showCartNotification(`${item.name} removed from cart.`);
 }
 
+function clearCart() {
+    const cart = getCart();
+    if (cart.length === 0) return;
+    const inventory = getInventory();
+    cart.forEach(item => {
+        const product = findProduct(item.id);
+        if (product) {
+            const current = availableStock(item.id);
+            inventory[item.id] = Math.min(product.stock, current + item.quantity);
+        }
+    });
+    saveInventory(inventory);
+    saveCart([]);
+    refreshStorefront();
+    showCartNotification("Your cart has been cleared. Items returned to stock.");
+}
+
+// Event delegation also supports product buttons generated after page load.
+document.addEventListener("click", event => {
+    const addButton = event.target.closest("button.add-to-cart");
+    if (addButton && !addButton.disabled) addToCart(addButton.dataset.productId);
+
+    const decreaseButton = event.target.closest(".decrease-quantity");
+    if (decreaseButton) updateCartQuantity(decreaseButton.dataset.productId, -1);
+
+    const increaseButton = event.target.closest(".increase-quantity");
+    if (increaseButton && !increaseButton.disabled) updateCartQuantity(increaseButton.dataset.productId, 1);
+
+    const removeButton = event.target.closest(".remove-cart-item");
+    if (removeButton) removeFromCart(removeButton.dataset.productId);
+
+    if (event.target.closest("#clearCartButton")) clearCart();
+});
 
 /* ========================================
-   DISPLAY CART
+   SHOPPING CART PAGE
 ======================================== */
 
 function renderCart() {
-
-    if (!cartItems) {
-        return;
-    }
-
-
-    const cart =
-        getCart();
-
-
-    cartItems.innerHTML = "";
-
+    const container = document.getElementById("cartItems");
+    if (!container) return;
+    const cart = getCart();
+    const itemCount = calculateCartItemCount(cart);
+    const subtotal = calculateCartSubtotal(cart);
 
     if (cart.length === 0) {
-
-        cartItems.innerHTML = `
-            <article class="cart-item">
-
-                <div>
-
-                    <h3>
-                        Your cart is currently empty.
-                    </h3>
-
-                    <p>
-                        Visit the shop to add products
-                        to your build.
-                    </p>
-
-                    <a
-                        class="product-button"
-                        href="shop.html">
-                        Continue Shopping
-                    </a>
-
-                </div>
-
-            </article>
-        `;
-
-
-        if (cartItemCount) {
-            cartItemCount.textContent = "0";
-        }
-
-
-        if (cartSubtotal) {
-            cartSubtotal.textContent = "$0.00";
-        }
-
-
-        if (cartTotal) {
-            cartTotal.textContent = "$0.00";
-        }
-
-
-        if (checkoutButton) {
-            checkoutButton.style.display = "none";
-        }
-
-
-        return;
-    }
-
-
-    cart.forEach(function (item) {
-
-        const product =
-            products.find(function (productItem) {
-
-                return productItem.id === item.id;
-
-            });
-
-
-        const lineTotal =
-            item.price * item.quantity;
-
-
-        cartItems.innerHTML += `
-            <article class="cart-item">
-
-                <div class="cart-item-info">
-
-                    <h3>
-                        ${item.name}
-                    </h3>
-
-                    <p>
-                        <strong>Unit Price:</strong>
-                        $${item.price.toFixed(2)}
-                    </p>
-
-                    <p>
-                        <strong>Available Stock:</strong>
-                        ${product ? product.stock : "N/A"}
-                    </p>
-
-
-                    <div class="quantity-controls">
-
-                        <span>
-                            <strong>Quantity:</strong>
-                        </span>
-
-                        <button
-                            type="button"
-                            class="quantity-button decrease-quantity"
-                            data-product-id="${item.id}"
-                            aria-label="Decrease quantity of ${item.name}">
-                            −
-                        </button>
-
-                        <span class="quantity-value">
-                            ${item.quantity}
-                        </span>
-
-                        <button
-                            type="button"
-                            class="quantity-button increase-quantity"
-                            data-product-id="${item.id}"
-                            aria-label="Increase quantity of ${item.name}">
-                            +
-                        </button>
-
+        container.innerHTML = `
+            <article class="cart-item"><div>
+                <h3>Your cart is currently empty.</h3>
+                <p>Visit the shop to add products to your build.</p>
+                <a class="product-button" href="shop.html">Continue Shopping</a>
+            </div></article>`;
+    } else {
+        container.innerHTML = cart.map(item => {
+            const stock = availableStock(item.id);
+            return `
+                <article class="cart-item">
+                    <div class="cart-item-info">
+                        <h3>${item.name}</h3>
+                        <p><strong>Unit Price:</strong> ${money(item.price)}</p>
+                        <p><strong>Available Stock:</strong> ${stock}</p>
+                        <div class="quantity-controls">
+                            <span><strong>Quantity:</strong></span>
+                            <button type="button" class="quantity-button decrease-quantity"
+                                    data-product-id="${item.id}"
+                                    ${item.quantity <= 1 ? "disabled" : ""}
+                                    aria-label="Decrease quantity of ${item.name}">−</button>
+                            <span class="quantity-value">${item.quantity}</span>
+                            <button type="button" class="quantity-button increase-quantity"
+                                    data-product-id="${item.id}"
+                                    ${stock === 0 ? 'disabled title="Out of Stock"' : ""}
+                                    aria-label="Increase quantity of ${item.name}">+</button>
+                        </div>
+                        <button type="button" class="remove-cart-item"
+                                data-product-id="${item.id}">Remove</button>
                     </div>
-
-
-                    <button
-                        type="button"
-                        class="remove-cart-item"
-                        data-product-id="${item.id}">
-                        Remove
-                    </button>
-
-                </div>
-
-
-                <div class="cart-item-total">
-
-                    <p>
-                        Item Total
-                    </p>
-
-                    <p class="cart-price">
-                        $${lineTotal.toFixed(2)}
-                    </p>
-
-                </div>
-
-            </article>
-        `;
-    });
-
-
-    const subtotal =
-        calculateCartSubtotal(cart);
-
-
-    const itemCount =
-        calculateCartItemCount(cart);
-
-
-    if (cartItemCount) {
-
-        cartItemCount.textContent =
-            itemCount;
+                    <div class="cart-item-total">
+                        <p>Item Total</p>
+                        <p class="cart-price">${money(item.price * item.quantity)}</p>
+                    </div>
+                </article>`;
+        }).join("");
     }
 
+    const setText = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+    };
+    setText("cartItemCount", itemCount);
+    setText("cartSubtotal", money(subtotal));
+    setText("cartTotal", money(subtotal));
 
-    if (cartSubtotal) {
-
-        cartSubtotal.textContent =
-            `$${subtotal.toFixed(2)}`;
-    }
-
-
-    if (cartTotal) {
-
-        cartTotal.textContent =
-            `$${subtotal.toFixed(2)}`;
-    }
-
-
-    if (checkoutButton) {
-
-        checkoutButton.style.display =
-            "inline-block";
-    }
-
-
-    const decreaseButtons =
-        document.querySelectorAll(
-            ".decrease-quantity"
-        );
-
-
-    decreaseButtons.forEach(function (button) {
-
-        button.addEventListener(
-            "click",
-            function () {
-
-                updateCartQuantity(
-                    button.dataset.productId,
-                    -1
-                );
-
-            }
-        );
-
-    });
-
-
-    const increaseButtons =
-        document.querySelectorAll(
-            ".increase-quantity"
-        );
-
-
-    increaseButtons.forEach(function (button) {
-
-        button.addEventListener(
-            "click",
-            function () {
-
-                updateCartQuantity(
-                    button.dataset.productId,
-                    1
-                );
-
-            }
-        );
-
-    });
-
-
-    const removeButtons =
-        document.querySelectorAll(
-            ".remove-cart-item"
-        );
-
-
-    removeButtons.forEach(function (button) {
-
-        button.addEventListener(
-            "click",
-            function () {
-
-                removeFromCart(
-                    button.dataset.productId
-                );
-
-            }
-        );
-
-    });
+    const checkoutButton = document.getElementById("checkoutButton");
+    if (checkoutButton) checkoutButton.hidden = cart.length === 0;
+    const clearButton = document.getElementById("clearCartButton");
+    if (clearButton) clearButton.disabled = cart.length === 0;
 }
 
-
 /* ========================================
-   INITIALIZE CART PAGE
-======================================== */
-
-if (cartItems) {
-
-    renderCart();
-
-}
-
-
-/* ========================================
-   CHECKOUT ELEMENTS
-======================================== */
-
-const checkoutItems =
-    document.getElementById("checkoutItems");
-
-const checkoutSubtotal =
-    document.getElementById("checkoutSubtotal");
-
-const checkoutShipping =
-    document.getElementById("checkoutShipping");
-
-const checkoutDiscount =
-    document.getElementById("checkoutDiscount");
-
-const checkoutTotal =
-    document.getElementById("checkoutTotal");
-
-const discountRow =
-    document.getElementById("discountRow");
-
-const couponCodeInput =
-    document.getElementById("coupon-code");
-
-const applyCouponButton =
-    document.getElementById("applyCouponButton");
-
-const couponMessage =
-    document.getElementById("couponMessage");
-
-const checkoutForm =
-    document.getElementById("checkoutForm");
-
-const checkoutMessage =
-    document.getElementById("checkoutMessage");
-
-
-/* ========================================
-   CHECKOUT SETTINGS
-======================================== */
-
-const FREE_SHIPPING_MINIMUM = 75;
-
-const STANDARD_SHIPPING = 6.99;
-
-let activeDiscountPercent = 0;
-
-
-/* ========================================
-   COUPON CODES
-======================================== */
-
-const coupons = {
-    BUILD10: 10,
-    SCALE15: 15
-};
-
-
-/* ========================================
-   SHIPPING CALCULATION
+   SHIPPING, COUPONS, AND CHECKOUT SUMMARY
 ======================================== */
 
 function calculateShipping(subtotal) {
-
-    if (subtotal >= FREE_SHIPPING_MINIMUM) {
-
-        return 0;
-    }
-
-
-    return STANDARD_SHIPPING;
+    return subtotal >= FREE_SHIPPING_MINIMUM ? 0 : STANDARD_SHIPPING;
 }
 
-
-/* ========================================
-   DISPLAY CHECKOUT ORDER
-======================================== */
+function orderTotals(cart) {
+    const subtotal = calculateCartSubtotal(cart);
+    const discount = subtotal * (activeDiscountPercent / 100);
+    const shipping = cart.length ? calculateShipping(subtotal) : 0;
+    return { subtotal, discount, shipping, total: subtotal - discount + shipping };
+}
 
 function renderCheckout() {
+    const container = document.getElementById("checkoutItems");
+    if (!container) return;
+    const cart = getCart();
+    const totals = orderTotals(cart);
 
-    if (!checkoutItems) {
-        return;
-    }
+    container.innerHTML = cart.length ? cart.map(item => `
+        <div class="checkout-item">
+            <div><h3>${item.name}</h3><p>Quantity: ${item.quantity}</p></div>
+            <strong>${money(item.price * item.quantity)}</strong>
+        </div>`).join("") : "<p>Your cart is currently empty.</p>";
 
+    const setText = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+    };
+    setText("checkoutSubtotal", money(totals.subtotal));
+    setText("checkoutDiscount", `-${money(totals.discount)}`);
+    setText("checkoutShipping", cart.length && totals.shipping === 0 ? "FREE" : money(totals.shipping));
+    setText("checkoutTotal", money(totals.total));
 
-    const cart =
-        getCart();
-
-
-    checkoutItems.innerHTML = "";
-
-
-    if (cart.length === 0) {
-
-        checkoutItems.innerHTML = `
-            <p>
-                Your cart is currently empty.
-            </p>
-        `;
-
-
-        checkoutSubtotal.textContent =
-            "$0.00";
-
-        checkoutShipping.textContent =
-            "$0.00";
-
-        checkoutDiscount.textContent =
-            "-$0.00";
-
-        checkoutTotal.textContent =
-            "$0.00";
-
-
-        if (discountRow) {
-
-            discountRow.hidden = true;
-        }
-
-
-        return;
-    }
-
-
-    cart.forEach(function (item) {
-
-        const itemTotal =
-            item.price * item.quantity;
-
-
-        checkoutItems.innerHTML += `
-            <div class="checkout-item">
-
-                <div>
-
-                    <h3>
-                        ${item.name}
-                    </h3>
-
-                    <p>
-                        Quantity: ${item.quantity}
-                    </p>
-
-                </div>
-
-                <strong>
-                    $${itemTotal.toFixed(2)}
-                </strong>
-
-            </div>
-        `;
-    });
-
-
-    const subtotal =
-        calculateCartSubtotal(cart);
-
-
-    const discountAmount =
-        subtotal *
-        (activeDiscountPercent / 100);
-
-
-    const discountedSubtotal =
-        subtotal - discountAmount;
-
-
-    const shipping =
-        calculateShipping(subtotal);
-
-
-    const total =
-        discountedSubtotal + shipping;
-
-
-    checkoutSubtotal.textContent =
-        `$${subtotal.toFixed(2)}`;
-
-
-    checkoutDiscount.textContent =
-        `-$${discountAmount.toFixed(2)}`;
-
-
-    if (discountAmount > 0) {
-
-        discountRow.hidden = false;
-
-    } else {
-
-        discountRow.hidden = true;
-    }
-
-
-    if (shipping === 0) {
-
-        checkoutShipping.textContent =
-            "FREE";
-
-    } else {
-
-        checkoutShipping.textContent =
-            `$${shipping.toFixed(2)}`;
-    }
-
-
-    checkoutTotal.textContent =
-        `$${total.toFixed(2)}`;
+    const discountRow = document.getElementById("discountRow");
+    if (discountRow) discountRow.hidden = totals.discount === 0;
+    const submitButton = document.getElementById("submitOrderButton");
+    if (submitButton) submitButton.disabled = cart.length === 0;
 }
-
-
-/* ========================================
-   APPLY COUPON
-======================================== */
 
 function applyCoupon() {
+    const input = document.getElementById("coupon-code");
+    const message = document.getElementById("couponMessage");
+    if (!input || !message) return;
+    const code = input.value.trim().toUpperCase();
 
-    if (!couponCodeInput) {
-        return;
-    }
-
-
-    const code =
-        couponCodeInput.value
-            .trim()
-            .toUpperCase();
-
-
-    if (code === "") {
-
+    if (!code) {
         activeDiscountPercent = 0;
-
-
-        couponMessage.textContent =
-            "Enter a coupon code.";
-
-
-        renderCheckout();
-
-        return;
-    }
-
-
-    if (coupons[code]) {
-
-        activeDiscountPercent =
-            coupons[code];
-
-
-        couponMessage.textContent =
-            `${activeDiscountPercent}% discount applied.`;
-
+        message.textContent = "Enter a coupon code.";
+    } else if (Object.prototype.hasOwnProperty.call(coupons, code)) {
+        activeDiscountPercent = coupons[code];
+        message.textContent = `${activeDiscountPercent}% discount applied.`;
     } else {
-
         activeDiscountPercent = 0;
-
-
-        couponMessage.textContent =
-            "Coupon code not recognized.";
+        message.textContent = "Coupon code not recognized.";
     }
-
-
     renderCheckout();
 }
-
-
-/* ========================================
-   COUPON BUTTON EVENT
-======================================== */
-
-if (applyCouponButton) {
-
-    applyCouponButton.addEventListener(
-        "click",
-        applyCoupon
-    );
-}
-
-
-/* ========================================
-   CHECKOUT VALIDATION
-======================================== */
 
 function validateCheckout() {
-
-    const cart =
-        getCart();
-
-
-    if (cart.length === 0) {
-
-        checkoutMessage.textContent =
-            "Your cart is empty.";
-
+    const message = document.getElementById("checkoutMessage");
+    if (!message) return false;
+    if (getCart().length === 0) {
+        message.textContent = "Your cart is empty.";
         return false;
     }
 
-
-    const shippingName =
-        document
-            .getElementById("shipping-name")
-            .value
-            .trim();
-
-
-    const shippingAddress =
-        document
-            .getElementById("shipping-address")
-            .value
-            .trim();
-
-
-    const shippingCity =
-        document
-            .getElementById("shipping-city")
-            .value
-            .trim();
-
-
-    const shippingState =
-        document
-            .getElementById("shipping-state")
-            .value
-            .trim()
-            .toUpperCase();
-
-
-    const shippingZip =
-        document
-            .getElementById("shipping-zip")
-            .value
-            .trim();
-
-
-    const shippingPhone =
-        document
-            .getElementById("shipping-phone")
-            .value
-            .trim();
-
-
-    const cardholderName =
-        document
-            .getElementById("cardholder-name")
-            .value
-            .trim();
-
-
-    const cardNumber =
-        document
-            .getElementById("card-number")
-            .value
-            .replace(/\s/g, "");
-
-
-    const expirationDate =
-        document
-            .getElementById("expiration-date")
-            .value;
-
-
-    const securityCode =
-        document
-            .getElementById("security-code")
-            .value
-            .trim();
-
-
-    if (
-        shippingName === "" ||
-        shippingAddress === "" ||
-        shippingCity === "" ||
-        shippingState === "" ||
-        shippingZip === "" ||
-        shippingPhone === "" ||
-        cardholderName === "" ||
-        cardNumber === "" ||
-        expirationDate === "" ||
-        securityCode === ""
-    ) {
-
-        checkoutMessage.textContent =
-            "Please complete all required fields.";
-
+    const field = id => (document.getElementById(id)?.value || "").trim();
+    const requiredIds = [
+        "shipping-name", "shipping-address", "shipping-city", "shipping-state",
+        "shipping-zip", "shipping-phone", "cardholder-name", "card-number",
+        "expiration-date", "security-code"
+    ];
+    if (requiredIds.some(id => !field(id))) {
+        message.textContent = "Please complete all required fields.";
         return false;
     }
-
-
-    const statePattern =
-        /^[A-Za-z]{2}$/;
-
-
-    if (!statePattern.test(shippingState)) {
-
-        checkoutMessage.textContent =
-            "Enter the state using its two-letter abbreviation.";
-
+    if (!/^[A-Za-z]{2}$/.test(field("shipping-state"))) {
+        message.textContent = "Enter the state using its two-letter abbreviation.";
         return false;
     }
-
-
-    const zipPattern =
-        /^\d{5}(-\d{4})?$/;
-
-
-    if (!zipPattern.test(shippingZip)) {
-
-        checkoutMessage.textContent =
-            "Enter a valid ZIP Code.";
-
+    if (!/^\d{5}(-\d{4})?$/.test(field("shipping-zip"))) {
+        message.textContent = "Enter a valid ZIP Code.";
         return false;
     }
-
-
-    const phoneDigits =
-        shippingPhone.replace(/\D/g, "");
-
-
-    if (phoneDigits.length !== 10) {
-
-        checkoutMessage.textContent =
-            "Enter a valid 10-digit phone number.";
-
+    if (field("shipping-phone").replace(/\D/g, "").length !== 10) {
+        message.textContent = "Enter a valid 10-digit phone number.";
         return false;
     }
-
-
-    const cardPattern =
-        /^\d{13,16}$/;
-
-
-    if (!cardPattern.test(cardNumber)) {
-
-        checkoutMessage.textContent =
-            "Enter a valid credit card number.";
-
+    if (!/^\d{13,16}$/.test(field("card-number").replace(/\s/g, ""))) {
+        message.textContent = "Enter a valid credit card number.";
         return false;
     }
-
-
-    const securityCodePattern =
-        /^\d{3,4}$/;
-
-
-    if (!securityCodePattern.test(securityCode)) {
-
-        checkoutMessage.textContent =
-            "Enter a valid 3 or 4 digit security code.";
-
+    if (!/^\d{3,4}$/.test(field("security-code"))) {
+        message.textContent = "Enter a valid 3 or 4 digit security code.";
         return false;
     }
-
-
-    const selectedExpiration =
-        new Date(
-            expirationDate + "-01T00:00:00"
-        );
-
-
-    const today =
-        new Date();
-
-
-    const currentMonth =
-        new Date(
-            today.getFullYear(),
-            today.getMonth(),
-            1
-        );
-
-
-    if (selectedExpiration < currentMonth) {
-
-        checkoutMessage.textContent =
-            "The card expiration date must be current or future.";
-
+    const expiration = new Date(`${field("expiration-date")}-01T00:00:00`);
+    const now = new Date();
+    const currentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    if (Number.isNaN(expiration.getTime()) || expiration < currentMonth) {
+        message.textContent = "The card expiration date must be current or future.";
         return false;
     }
-
-
-    checkoutMessage.textContent = "";
-
+    message.textContent = "";
     return true;
 }
 
-
-/* ========================================
-   CHECKOUT SUBMISSION
-======================================== */
-
-if (checkoutForm) {
-
-    checkoutForm.addEventListener(
-        "submit",
-        function (event) {
-
-            event.preventDefault();
-
-
-            if (!validateCheckout()) {
-                return;
-            }
-
-
-            const cart =
-                getCart();
-
-
-            const subtotal =
-                calculateCartSubtotal(cart);
-
-
-            const discountAmount =
-                subtotal *
-                (activeDiscountPercent / 100);
-
-
-            const shipping =
-                calculateShipping(subtotal);
-
-
-            const finalTotal =
-                subtotal -
-                discountAmount +
-                shipping;
-
-
-            const orderSummary = {
-                cart: cart,
-                subtotal: subtotal,
-                discount: discountAmount,
-                shipping: shipping,
-                total: finalTotal
-            };
-
-
-            localStorage.setItem(
-                "oneIn144LastOrder",
-                JSON.stringify(orderSummary)
-            );
-
-
-            localStorage.removeItem(
-                "oneIn144Cart"
-            );
-
-
-            window.location.href =
-                "confirmation.html";
-        }
-    );
+function submitOrder(event) {
+    event.preventDefault();
+    if (!validateCheckout()) return;
+    const cart = getCart();
+    const totals = orderTotals(cart);
+    // Store only the order summary: never store payment or card details.
+    localStorage.setItem(LAST_ORDER_KEY, JSON.stringify({ cart, ...totals }));
+    // Purchased stock was reserved on Add to Cart; do NOT restore it here.
+    saveCart([]);
+    updateHeaderCart();
+    window.location.href = "confirmation.html";
 }
 
-
 /* ========================================
-   INITIALIZE CHECKOUT PAGE
-======================================== */
-
-if (checkoutItems) {
-
-    renderCheckout();
-
-}
-
-
-/* ========================================
-   CONTACT FORM ELEMENTS
-======================================== */
-
-const contactForm =
-    document.getElementById("contactForm");
-
-const contactMessage =
-    document.getElementById("contactMessage");
-
-
-/* ========================================
-   CONTACT FORM VALIDATION
-======================================== */
-
-function validateContactForm() {
-
-    const email =
-        document
-            .getElementById("contact-email")
-            .value
-            .trim();
-
-
-    const message =
-        document
-            .getElementById("contact-message")
-            .value
-            .trim();
-
-
-    if (email === "" || message === "") {
-
-        contactMessage.textContent =
-            "Please complete the required email and message fields.";
-
-        return false;
-    }
-
-
-    const emailPattern =
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-    if (!emailPattern.test(email)) {
-
-        contactMessage.textContent =
-            "Please enter a valid email address.";
-
-        return false;
-    }
-
-
-    if (message.length < 10) {
-
-        contactMessage.textContent =
-            "Please enter a message containing at least 10 characters.";
-
-        return false;
-    }
-
-
-    contactMessage.textContent = "";
-
-    return true;
-}
-
-
-/* ========================================
-   CONTACT FORM SUBMISSION
-======================================== */
-
-if (contactForm) {
-
-    contactForm.addEventListener(
-        "submit",
-        function (event) {
-
-            event.preventDefault();
-
-
-            if (!validateContactForm()) {
-                return;
-            }
-
-
-            contactMessage.textContent =
-                "Thank you. Your message has been successfully submitted.";
-
-
-            contactForm.reset();
-        }
-    );
-}
-
-
-/* ========================================
-   CONFIRMATION PAGE ELEMENTS
-======================================== */
-
-const confirmationItems =
-    document.getElementById("confirmationItems");
-
-const confirmationSubtotal =
-    document.getElementById("confirmationSubtotal");
-
-const confirmationDiscountRow =
-    document.getElementById("confirmationDiscountRow");
-
-const confirmationDiscount =
-    document.getElementById("confirmationDiscount");
-
-const confirmationShipping =
-    document.getElementById("confirmationShipping");
-
-const confirmationTotal =
-    document.getElementById("confirmationTotal");
-
-const confirmationMessage =
-    document.getElementById("confirmationMessage");
-
-
-/* ========================================
-   GET LAST ORDER
+   CONFIRMATION PAGE
 ======================================== */
 
 function getLastOrder() {
-
-    const savedOrder =
-        localStorage.getItem("oneIn144LastOrder");
-
-
-    if (!savedOrder) {
-
-        return null;
-    }
-
-
     try {
-
-        return JSON.parse(savedOrder);
-
+        return JSON.parse(localStorage.getItem(LAST_ORDER_KEY));
     } catch (error) {
-
         return null;
     }
 }
-
-
-/* ========================================
-   DISPLAY ORDER CONFIRMATION
-======================================== */
 
 function renderConfirmation() {
+    const container = document.getElementById("confirmationItems");
+    if (!container) return;
+    const order = getLastOrder();
+    const message = document.getElementById("confirmationMessage");
+    const setText = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+    };
+    const discountRow = document.getElementById("confirmationDiscountRow");
 
-    if (!confirmationItems) {
+    if (!order || !Array.isArray(order.cart) || order.cart.length === 0) {
+        if (message) message.textContent = "No completed order was found.";
+        container.innerHTML = "<p>Complete an order through checkout to view its confirmation details.</p>";
+        setText("confirmationSubtotal", "$0.00");
+        setText("confirmationDiscount", "-$0.00");
+        setText("confirmationShipping", "$0.00");
+        setText("confirmationTotal", "$0.00");
+        if (discountRow) discountRow.hidden = true;
         return;
     }
 
-
-    const order =
-        getLastOrder();
-
-
-    if (
-        !order ||
-        !order.cart ||
-        order.cart.length === 0
-    ) {
-
-        confirmationMessage.textContent =
-            "No completed order was found.";
-
-
-        confirmationItems.innerHTML = `
-            <p>
-                Complete an order through checkout
-                to view its confirmation details.
-            </p>
-        `;
-
-
-        confirmationSubtotal.textContent =
-            "$0.00";
-
-        confirmationShipping.textContent =
-            "$0.00";
-
-        confirmationTotal.textContent =
-            "$0.00";
-
-
-        if (confirmationDiscountRow) {
-
-            confirmationDiscountRow.hidden =
-                true;
-        }
-
-
-        return;
-    }
-
-
-    confirmationItems.innerHTML = "";
-
-
-    order.cart.forEach(function (item) {
-
-        const itemTotal =
-            item.price * item.quantity;
-
-
-        confirmationItems.innerHTML += `
-            <div class="checkout-item">
-
-                <div>
-
-                    <h3>
-                        ${item.name}
-                    </h3>
-
-                    <p>
-                        Quantity: ${item.quantity}
-                    </p>
-
-                </div>
-
-                <strong>
-                    $${itemTotal.toFixed(2)}
-                </strong>
-
-            </div>
-        `;
-    });
-
-
-    confirmationSubtotal.textContent =
-        `$${order.subtotal.toFixed(2)}`;
-
-
-    if (order.discount > 0) {
-
-        confirmationDiscountRow.hidden =
-            false;
-
-
-        confirmationDiscount.textContent =
-            `-$${order.discount.toFixed(2)}`;
-
-    } else {
-
-        confirmationDiscountRow.hidden =
-            true;
-    }
-
-
-    if (order.shipping === 0) {
-
-        confirmationShipping.textContent =
-            "FREE";
-
-    } else {
-
-        confirmationShipping.textContent =
-            `$${order.shipping.toFixed(2)}`;
-    }
-
-
-    confirmationTotal.textContent =
-        `$${order.total.toFixed(2)}`;
+    if (message) message.textContent = "Your One in 144 prototype order has been successfully submitted.";
+    container.innerHTML = order.cart.map(item => `
+        <div class="checkout-item">
+            <div><h3>${item.name}</h3><p>Quantity: ${item.quantity}</p></div>
+            <strong>${money(item.price * item.quantity)}</strong>
+        </div>`).join("");
+    setText("confirmationSubtotal", money(order.subtotal));
+    setText("confirmationDiscount", `-${money(order.discount)}`);
+    setText("confirmationShipping", order.shipping === 0 ? "FREE" : money(order.shipping));
+    setText("confirmationTotal", money(order.total));
+    if (discountRow) discountRow.hidden = order.discount <= 0;
 }
-
 
 /* ========================================
-   INITIALIZE CONFIRMATION PAGE
+   CONTACT FORM
 ======================================== */
 
-if (confirmationItems) {
+function validateContactForm() {
+    const message = document.getElementById("contactMessage");
+    const email = document.getElementById("contact-email")?.value.trim() || "";
+    const body = document.getElementById("contact-message")?.value.trim() || "";
+    if (!message) return false;
 
-    renderConfirmation();
-
+    if (!email || !body) {
+        message.textContent = "Please complete the required email and message fields.";
+        return false;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        message.textContent = "Please enter a valid email address.";
+        return false;
+    }
+    if (body.length < 10) {
+        message.textContent = "Please enter a message containing at least 10 characters.";
+        return false;
+    }
+    message.textContent = "";
+    return true;
 }
+
+function submitContactForm(event) {
+    event.preventDefault();
+    if (!validateContactForm()) return;
+    document.getElementById("contactMessage").textContent =
+        "Your message passed validation. This prototype does not send messages.";
+    event.currentTarget.reset();
+}
+
+/* ========================================
+   CUSTOM 3D PRINT FORM (PROTOTYPE ONLY)
+======================================== */
+
+function submitCustomPrintForm(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const message = document.getElementById("customPrintMessage");
+    const file = document.getElementById("design-file")?.files[0];
+    const permission = document.getElementById("permission")?.checked;
+    if (!message) return;
+
+    if (!file || !/\.(stl|obj)$/i.test(file.name)) {
+        message.textContent = "Please select an STL or OBJ design file.";
+        return;
+    }
+    if (!permission) {
+        message.textContent = "Please confirm you have permission to reproduce this design.";
+        return;
+    }
+    const quantity = Number(document.getElementById("quantity")?.value);
+    if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
+        message.textContent = "Choose a quantity between 1 and 10.";
+        return;
+    }
+    // A local static site cannot upload the selected file or create a real order.
+    message.textContent = "Print request details validated. No file was uploaded; this is a classroom prototype.";
+    form.reset();
+}
+
+/* ========================================
+   INITIALIZATION AND EVENT LISTENERS
+======================================== */
+
+// Build inventory once so the Week 3 cart is accounted for before rendering.
+getInventory();
+initializeQuickCart();
+refreshStorefront();
+renderConfirmation();
+
+const couponButton = document.getElementById("applyCouponButton");
+if (couponButton) couponButton.addEventListener("click", applyCoupon);
+
+const checkoutForm = document.getElementById("checkoutForm");
+if (checkoutForm) checkoutForm.addEventListener("submit", submitOrder);
+
+const contactForm = document.getElementById("contactForm");
+if (contactForm) contactForm.addEventListener("submit", submitContactForm);
+
+const customPrintForm = document.getElementById("customPrintForm");
+if (customPrintForm) customPrintForm.addEventListener("submit", submitCustomPrintForm);
+
+// Refresh the header when another tab changes localStorage.
+window.addEventListener("storage", event => {
+    if ([CART_KEY, INVENTORY_KEY].includes(event.key)) refreshStorefront();
+});

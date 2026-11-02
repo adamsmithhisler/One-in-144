@@ -4,15 +4,25 @@
 <head>
     <!--
         Author: Adam Smithhisler
-        Date: 10/18/2026
-        Assignment: Project - Style & Substance
+        Date: 11/1/2026
+        Assignment: SDC260 Final Project - Week 4
         Purpose: Homepage for the One in 144 e-commerce website.
+                 Includes product navigation, featured products,
+                 shopping cart information, inventory awareness,
+                 and visual feedback for cart interactions.
     -->
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>One in 144</title>
+    <meta name="description"
+        content="Shop 1/144-scale model kits, kitbash parts, diorama supplies, tools, and custom 3D printing at One in 144.">
+
+    <title>One in 144 | Build. Combine. Create.</title>
+
+    <!-- ========================================
+         FONTS
+    ========================================= -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,123 +31,376 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Michroma&family=Rajdhani:wght@500;600;700&display=swap"
         rel="stylesheet">
 
+    <!-- ========================================
+         STYLESHEET
+    ========================================= -->
+
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- ========================================
+         SHARED JAVASCRIPT
+    ========================================= -->
+
+    <script src="js/script.js" defer></script>
+
 </head>
 
 <body>
 
+    <!-- ========================================
+         HEADER AND NAVIGATION
+    ========================================= -->
+
     <header>
+
         <div class="header-content">
 
             <h1>One in 144</h1>
+
             <p>One Build. 144 Possibilities.</p>
 
             <nav aria-label="Main navigation">
-                <a href="index.html">Home</a>
-                <a href="shop.html">Shop</a>
-                <a href="custom-print.html">Custom Print</a>
-                <a href="resources.html">Builder Resources</a>
-                <a href="cart.html">Cart</a>
+
+                <a href="index.html" aria-current="page">
+                    Home
+                </a>
+
+                <a href="shop.html">
+                    Shop
+                </a>
+
+                <a href="custom-print.html">
+                    Custom Print
+                </a>
+
+                <a href="resources.html">
+                    Builder Resources
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
             </nav>
 
+            <!-- Current shopping cart summary -->
+            <div class="header-cart-summary" id="headerCartSummary" aria-live="polite">
+
+                <span>
+                    Cart Items:
+                    <strong id="homeCartCount">0</strong>
+                </span>
+
+                <span>
+                    Subtotal:
+                    <strong id="homeCartSubtotal">$0.00</strong>
+                </span>
+
+                <a href="cart.html">
+                    View Cart
+                </a>
+
+            </div>
+
         </div>
+
     </header>
+
+    <!-- ========================================
+         FREE SHIPPING BANNER
+    ========================================= -->
 
     <div class="shipping-banner" role="status">
         FREE SHIPPING ON ORDERS $75 AND UP
     </div>
 
+    <!-- ========================================
+         MAIN CONTENT
+    ========================================= -->
+
     <main>
 
-        <section class="hero">
-            <p>1/144 SCALE • KITBASH • DIORAMA</p>
+        <!-- ========================================
+             HERO SECTION
+        ========================================= -->
 
-            <h2>Build. Combine. Create.</h2>
+        <section class="hero">
 
             <p>
-                Model kits, kitbashing parts, diorama supplies,
-                tools, and custom fabrication for builders who
-                want to go beyond the instructions.
+                1/144 SCALE • KITBASH • DIORAMA
             </p>
 
-            <a href="shop.html">Shop Now</a>
+            <h2>
+                Build. Combine. Create.
+            </h2>
+
+            <p>
+                Model kits, kitbashing parts, diorama
+                supplies, tools, and custom fabrication
+                for builders who want to go beyond
+                the instructions.
+            </p>
+
+            <a href="shop.html">
+                Shop Now
+            </a>
+
         </section>
 
-        <section>
-            <h2>Shop by Category</h2>
+        <!-- ========================================
+             SHOP BY CATEGORY
+        ========================================= -->
+
+        <section aria-labelledby="categories-heading">
+
+            <h2 id="categories-heading">
+                Shop by Category
+            </h2>
 
             <div class="category-grid">
 
-                <article class="category-card">
-                    <h3>HG Model Kits</h3>
-                    <p>
-                        1/144-scale kits for straight builds
-                        and custom projects.
-                    </p>
-                </article>
+                <!-- HG MODEL KITS -->
 
                 <article class="category-card">
+
+                    <h3>HG Model Kits</h3>
+
+                    <p>
+                        1/144-scale kits for straight builds,
+                        customization, and custom projects.
+                    </p>
+
+                    <a href="shop.html">
+                        Browse Model Kits
+                    </a>
+
+                </article>
+
+                <!-- KITBASH PARTS -->
+
+                <article class="category-card">
+
                     <h3>Kitbash Parts</h3>
+
                     <p>
                         Mechanical details, armor pieces,
-                        weapons, and upgrade parts.
+                        weapons, thrusters, and upgrade parts
+                        for custom builds.
                     </p>
+
+                    <a href="shop.html">
+                        Browse Kitbash Parts
+                    </a>
+
                 </article>
 
+                <!-- DIORAMA SUPPLIES -->
+
                 <article class="category-card">
+
                     <h3>Diorama Supplies</h3>
+
                     <p>
                         Terrain, display bases, weathering
-                        materials, and lighting.
+                        materials, and lighting for detailed
+                        scenes and environments.
                     </p>
+
+                    <a href="shop.html">
+                        Browse Diorama Supplies
+                    </a>
+
                 </article>
 
             </div>
+
         </section>
 
+        <!-- ========================================
+             CUSTOM 3D PRINTING
+        ========================================= -->
+
         <section class="custom-print">
-            <h2>Custom 3D Printing</h2>
+
+            <h2>
+                Custom 3D Printing
+            </h2>
 
             <p>
                 Upload an original design for a limited
-                custom print order.
+                custom print order. Choose your preferred
+                material, scale, and quantity to begin
+                a custom printing request.
             </p>
 
-            <a href="custom-print.html">Learn More</a>
+            <a href="custom-print.html">
+                Learn More
+            </a>
+
         </section>
 
-        <section>
-            <h2>Featured Products</h2>
+        <!-- ========================================
+             FEATURED PRODUCTS
+        ========================================= -->
 
-            <div class="product-grid">
+        <section aria-labelledby="featured-heading">
 
-                <article class="product-card">
-                    <h3>HG 1/144 Urban Combat Model Kit</h3>
-                    <p>$24.99</p>
-                    <a href="product.html">View Product</a>
+            <h2 id="featured-heading">
+                Featured Products
+            </h2>
+
+            <p class="section-description">
+                Explore featured products from our
+                1/144-scale model building collection.
+                Visit the Shop for our complete catalog.
+            </p>
+
+            <!--
+                Week 4 inventory integration:
+
+                JavaScript will update these featured cards
+                using the shared product inventory.
+
+                Product availability must be checked before
+                allowing an Add to Cart action.
+
+                Out-of-stock products will have disabled
+                Add to Cart buttons and a mouse tooltip.
+            -->
+
+            <div class="product-grid" id="featuredProductContainer">
+
+                <!--
+                    Existing featured cards remain available
+                    until the shared JavaScript renderer is
+                    updated in the next development step.
+                -->
+
+                <article class="product-card" data-featured-id="KIT-001">
+
+                    <h3>
+                        HG 1/144 Urban Combat Model Kit
+                    </h3>
+
+                    <p>
+                        A customizable 1/144-scale model kit
+                        suitable for straight builds,
+                        modifications, and diorama projects.
+                    </p>
+
+                    <p>
+                        <strong>$24.99</strong>
+                    </p>
+
+                    <a href="product.html">
+                        View Product
+                    </a>
+
                 </article>
 
-                <article class="product-card">
-                    <h3>1/144 Mechanical Detail Pack</h3>
-                    <p>$14.99</p>
-                    <a href="product.html">View Product</a>
+                <article class="product-card" data-featured-id="KBP-014">
+
+                    <h3>
+                        1/144 Mechanical Detail Pack
+                    </h3>
+
+                    <p>
+                        Mechanical upgrade parts for
+                        adding detail to custom
+                        model builds.
+                    </p>
+
+                    <p>
+                        <strong>$14.99</strong>
+                    </p>
+
+                    <a href="shop.html">
+                        View in Shop
+                    </a>
+
                 </article>
 
-                <article class="product-card">
-                    <h3>Urban Ruin Display Base</h3>
-                    <p>$19.99</p>
-                    <a href="product.html">View Product</a>
+                <article class="product-card" data-featured-id="DIO-003">
+
+                    <h3>
+                        Urban Ruin Display Base
+                    </h3>
+
+                    <p>
+                        Modular terrain and environmental
+                        details for displaying 1/144-scale
+                        models.
+                    </p>
+
+                    <p>
+                        <strong>$19.99</strong>
+                    </p>
+
+                    <a href="shop.html">
+                        View in Shop
+                    </a>
+
                 </article>
 
             </div>
+
+            <p>
+                <a href="shop.html">
+                    View All Products
+                </a>
+            </p>
+
         </section>
 
     </main>
 
+    <!-- ========================================
+         CART NOTIFICATION
+    ========================================= -->
+
+    <!--
+        Week 4 visual feedback:
+
+        JavaScript will display this notification after
+        a successful Add to Cart action.
+
+        The notification gives customers immediate
+        confirmation without requiring a browser alert.
+    -->
+
+    <div id="cartNotification" class="cart-notification" role="status" aria-live="polite" aria-atomic="true" hidden>
+
+        Product added to your cart.
+
+    </div>
+
+    <!-- ========================================
+         OUT OF STOCK TOOLTIP
+    ========================================= -->
+
+    <!--
+        Week 4 inventory awareness:
+
+        JavaScript will display this tooltip when
+        the cursor moves over an unavailable product.
+    -->
+
+    <div id="outOfStockTooltip" class="out-of-stock-tooltip" role="tooltip" hidden>
+
+        Out of Stock
+
+    </div>
+
+    <!-- ========================================
+         FOOTER
+    ========================================= -->
+
     <footer>
 
         <p>
-            <a href="contact.html">Contact Us</a>
+            <a href="contact.html">
+                Contact Us
+            </a>
         </p>
 
         <p>

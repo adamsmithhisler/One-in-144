@@ -4,70 +4,154 @@
 <head>
     <!--
         Author: Adam Smithhisler
-        Date: 10/27/2026
-        Assignment: Final Project - Interactive E-Commerce Features
-        Purpose: Checkout page for the One in 144 e-commerce website.
-                 Collects shipping and prototype payment information,
-                 validates input, applies coupon discounts, and displays
-                 dynamic order pricing.
+        Date: 11/1/2026
+        Assignment: SDC260 Final Project - Week 4
+        Purpose: Checkout page for the One in 144
+                 e-commerce website. Collects shipping
+                 and prototype payment information,
+                 validates customer input, applies coupon
+                 discounts, calculates shipping, and
+                 prepares an order for confirmation.
     -->
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Complete your One in 144 order. Review your shopping cart, enter shipping information, apply a coupon, and confirm your purchase.">
 
     <title>Checkout | One in 144</title>
 
+    <!-- ========================================
+         FONTS
+    ========================================= -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Michroma&family=Rajdhani:wght@500;600;700&display=swap"
         rel="stylesheet">
 
+    <!-- ========================================
+         STYLESHEET
+    ========================================= -->
+
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- ========================================
+         SHARED JAVASCRIPT
+    ========================================= -->
+
+    <script src="js/script.js" defer></script>
+
 </head>
 
 <body>
 
+    <!-- ========================================
+         HEADER AND NAVIGATION
+    ========================================= -->
+
     <header>
+
         <div class="header-content">
 
             <h1>One in 144</h1>
+
             <p>One Build. 144 Possibilities.</p>
 
             <nav aria-label="Main navigation">
-                <a href="index.html">Home</a>
-                <a href="shop.html">Shop</a>
-                <a href="custom-print.html">Custom Print</a>
-                <a href="resources.html">Builder Resources</a>
-                <a href="cart.html">Cart</a>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="shop.html">
+                    Shop
+                </a>
+
+                <a href="custom-print.html">
+                    Custom Print
+                </a>
+
+                <a href="resources.html">
+                    Builder Resources
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
             </nav>
 
+            <!-- ========================================
+                 HEADER CART SUMMARY
+            ========================================= -->
+
+            <div class="header-cart-summary" id="headerCartSummary" aria-live="polite">
+
+                <span>
+                    Cart Items:
+                    <strong id="homeCartCount">0</strong>
+                </span>
+
+                <span>
+                    Subtotal:
+                    <strong id="homeCartSubtotal">$0.00</strong>
+                </span>
+
+            </div>
+
         </div>
+
     </header>
+
+    <!-- ========================================
+         FREE SHIPPING BANNER
+    ========================================= -->
 
     <div class="shipping-banner" role="status">
         FREE SHIPPING ON ORDERS $75 AND UP
     </div>
 
+    <!-- ========================================
+         MAIN CONTENT
+    ========================================= -->
+
     <main>
+
+        <!-- ========================================
+             CHECKOUT HERO
+        ========================================= -->
 
         <section class="hero">
 
-            <p>SHIPPING • PAYMENT • COMPLETE</p>
+            <p>
+                SHIPPING • PAYMENT • COMPLETE
+            </p>
 
             <h2>Checkout</h2>
 
             <p>
                 Enter your shipping and purchase information,
-                apply an available coupon code, and review your
-                order before completing checkout.
+                apply an available coupon code, and review
+                your order before completing checkout.
             </p>
 
         </section>
 
+        <!-- ========================================
+             CHECKOUT LAYOUT
+        ========================================= -->
 
-        <section class="checkout-layout">
+        <section class="checkout-layout" aria-label="Checkout form and order summary">
+
+            <!-- ========================================
+                 CHECKOUT FORM
+            ========================================= -->
 
             <article class="checkout-form">
 
@@ -83,6 +167,7 @@
                             Shipping Information
                         </h2>
 
+                        <!-- FULL NAME -->
 
                         <div class="form-group">
 
@@ -94,6 +179,7 @@
 
                         </div>
 
+                        <!-- STREET ADDRESS -->
 
                         <div class="form-group">
 
@@ -106,6 +192,7 @@
 
                         </div>
 
+                        <!-- CITY AND STATE -->
 
                         <div class="checkout-row">
 
@@ -120,7 +207,6 @@
 
                             </div>
 
-
                             <div class="form-group">
 
                                 <label for="shipping-state">
@@ -134,6 +220,7 @@
 
                         </div>
 
+                        <!-- ZIP CODE AND PHONE -->
 
                         <div class="checkout-row">
 
@@ -148,7 +235,6 @@
                                     required>
 
                             </div>
-
 
                             <div class="form-group">
 
@@ -165,7 +251,6 @@
 
                     </section>
 
-
                     <!-- ========================================
                          PURCHASE INFORMATION
                     ========================================= -->
@@ -176,6 +261,7 @@
                             Purchase Information
                         </h2>
 
+                        <!-- CARDHOLDER NAME -->
 
                         <div class="form-group">
 
@@ -188,6 +274,7 @@
 
                         </div>
 
+                        <!-- CARD NUMBER -->
 
                         <div class="form-group">
 
@@ -200,6 +287,7 @@
 
                         </div>
 
+                        <!-- EXPIRATION AND SECURITY CODE -->
 
                         <div class="checkout-row">
 
@@ -213,7 +301,6 @@
                                     required>
 
                             </div>
-
 
                             <div class="form-group">
 
@@ -230,9 +317,8 @@
 
                     </section>
 
-
                     <!-- ========================================
-                         COUPON
+                         COUPON CODE
                     ========================================= -->
 
                     <section aria-labelledby="coupon-heading">
@@ -251,26 +337,61 @@
 
                         </div>
 
+                        <!--
+                            Existing coupon button ID is
+                            preserved for JavaScript.
 
-                        <button class="secondary-button coupon-button" id="applyCouponButton" type="button">
+                            The shared script validates
+                            the entered coupon and updates
+                            the order summary.
+                        -->
+
+                        <button type="button" class="secondary-button coupon-button" id="applyCouponButton">
+
                             Apply Coupon
-                        </button>
 
+                        </button>
 
                         <p id="couponMessage" class="coupon-message" aria-live="polite">
                         </p>
 
                     </section>
 
+                    <!-- ========================================
+                         SUBMIT ORDER
+                    ========================================= -->
 
-                    <button class="product-button" type="submit">
+                    <!--
+                        WEEK 4 CHECKOUT INTEGRATION
+
+                        The JavaScript submission handler will:
+
+                        - Verify the cart is not empty
+                        - Validate the checkout fields
+                        - Calculate subtotal and discounts
+                        - Calculate shipping charges
+                        - Preserve purchased inventory deductions
+                        - Save the completed order
+                        - Clear the active shopping cart
+                        - Navigate to confirmation.html
+
+                        No real payment is processed.
+                    -->
+
+                    <button type="submit" class="product-button" id="submitOrderButton">
+
                         Submit Order
+
                     </button>
 
+                    <!-- JavaScript validation messages -->
 
-                    <p id="checkoutMessage" aria-live="polite">
+                    <p id="checkoutMessage" role="status" aria-live="polite">
                     </p>
 
+                    <!-- ========================================
+                         PROTOTYPE NOTICE
+                    ========================================= -->
 
                     <p class="prototype-note">
                         This checkout is a classroom prototype.
@@ -282,22 +403,43 @@
 
             </article>
 
-
             <!-- ========================================
                  ORDER SUMMARY
             ========================================= -->
 
-            <aside class="checkout-summary">
+            <aside class="checkout-summary" id="checkoutSummary" aria-labelledby="checkout-summary-heading">
 
-                <h2>Order Summary</h2>
+                <h2 id="checkout-summary-heading">
+                    Order Summary
+                </h2>
 
+                <!-- ========================================
+                     PURCHASED ITEMS
+                ========================================= -->
 
-                <div id="checkoutItems"></div>
+                <!--
+                    JavaScript generates selected products
+                    and quantities using the saved cart.
 
+                    This container uses the original ID
+                    required by renderCheckout().
+                -->
+
+                <div id="checkoutItems" aria-live="polite">
+
+                    <!-- Order items inserted by JavaScript -->
+
+                </div>
+
+                <!-- ========================================
+                     SUBTOTAL
+                ========================================= -->
 
                 <div class="summary-row">
 
-                    <span>Subtotal</span>
+                    <span>
+                        Subtotal
+                    </span>
 
                     <strong id="checkoutSubtotal">
                         $0.00
@@ -305,10 +447,23 @@
 
                 </div>
 
+                <!-- ========================================
+                     DISCOUNT
+                ========================================= -->
+
+                <!--
+                    This row remains hidden unless a valid
+                    coupon generates a discount.
+
+                    Existing JavaScript uses discountRow
+                    to control its visibility.
+                -->
 
                 <div class="summary-row" id="discountRow" hidden>
 
-                    <span>Discount</span>
+                    <span>
+                        Discount
+                    </span>
 
                     <strong id="checkoutDiscount">
                         -$0.00
@@ -316,10 +471,15 @@
 
                 </div>
 
+                <!-- ========================================
+                     SHIPPING
+                ========================================= -->
 
                 <div class="summary-row">
 
-                    <span>Shipping</span>
+                    <span>
+                        Shipping
+                    </span>
 
                     <strong id="checkoutShipping">
                         $0.00
@@ -327,22 +487,44 @@
 
                 </div>
 
+                <!-- ========================================
+                     FINAL TOTAL
+                ========================================= -->
 
                 <div class="summary-row summary-total">
 
-                    <span>Total</span>
+                    <span>
+                        Total
+                    </span>
 
-                    <strong id="checkoutTotal">
+                    <strong id="checkoutTotal" aria-live="polite">
                         $0.00
                     </strong>
 
                 </div>
 
+                <!-- ========================================
+                     SHIPPING POLICY
+                ========================================= -->
 
                 <p class="prototype-note">
+
                     Orders of $75 or more receive free shipping.
-                    Orders below $75 include $6.99 flat-rate shipping.
+
+                    Orders below $75 include $6.99
+                    flat-rate shipping.
+
                 </p>
+
+                <!-- ========================================
+                     RETURN TO CART
+                ========================================= -->
+
+                <a href="cart.html" class="secondary-button">
+
+                    Return to Cart
+
+                </a>
 
             </aside>
 
@@ -350,11 +532,16 @@
 
     </main>
 
+    <!-- ========================================
+         FOOTER
+    ========================================= -->
 
     <footer>
 
         <p>
-            <a href="contact.html">Contact Us</a>
+            <a href="contact.html">
+                Contact Us
+            </a>
         </p>
 
         <p>
@@ -362,9 +549,6 @@
         </p>
 
     </footer>
-
-
-    <script src="js/script.js"></script>
 
 </body>
 

@@ -990,3 +990,613 @@ footer a:focus-visible {
         font-size: 1.15rem;
     }
 }
+
+/* ========================================
+   WEEK 4 - SHARED HEADER CART SUMMARY
+   Compatible with all nine updated HTML pages.
+======================================== */
+
+.header-cart-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px 24px;
+    max-width: 700px;
+    margin: 18px auto 0;
+    padding: 12px 18px;
+    background-color: var(--deep-charcoal);
+    border: 1px solid #475569;
+    border-radius: 6px;
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1.05rem;
+}
+
+.header-cart-summary strong {
+    color: var(--signal-orange);
+    font-variant-numeric: tabular-nums;
+}
+
+.header-cart-summary a {
+    color: var(--technical-blue);
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.header-cart-summary a:hover,
+.header-cart-summary a:focus-visible {
+    color: var(--off-white);
+}
+
+.nav-cart-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.nav-cart-count {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 25px;
+    height: 25px;
+    padding: 0 6px;
+    border-radius: 20px;
+    background-color: var(--signal-orange);
+    color: var(--deep-charcoal);
+    font-family: "Inter", Arial, sans-serif;
+    font-size: .8rem;
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Keep the promotional banner visible as the page scrolls. */
+.shipping-banner {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+
+/* ========================================
+   WEEK 4 - LIVE PRODUCT STOCK
+======================================== */
+
+.product-stock,
+.product-availability {
+    color: var(--technical-blue);
+    font-weight: 600;
+}
+
+.product-stock strong,
+.product-availability strong {
+    color: var(--off-white);
+}
+
+.product-card.out-of-stock,
+.product-info.out-of-stock {
+    background-color: #262b35;
+    border: 1px solid #657080;
+    opacity: .65;
+}
+
+.product-card.out-of-stock {
+    cursor: not-allowed;
+}
+
+.product-card.out-of-stock .product-stock,
+.product-info.out-of-stock .product-availability,
+.out-of-stock-message {
+    color: #fca5a5;
+}
+
+/* The button cannot be used when inventory is zero. */
+button.add-to-cart:disabled,
+button.add-to-cart.product-page-add-to-cart:disabled {
+    color: #b3bbc7;
+    background-color: #4b5563;
+    text-decoration: none;
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+/* The detailed product page uses a full-size button. */
+button.add-to-cart.product-page-add-to-cart:disabled:hover,
+button.add-to-cart.product-page-add-to-cart:disabled:focus {
+    color: #b3bbc7;
+    background-color: #4b5563;
+}
+
+.out-of-stock-message {
+    margin: 12px 0 0;
+    font-weight: 700;
+}
+
+/* Tooltip follows the mouse; its coordinates are set by JavaScript. */
+.out-of-stock-tooltip {
+    position: fixed;
+    z-index: 9999;
+    width: max-content;
+    max-width: 160px;
+    padding: 7px 11px;
+    border: 1px solid #fca5a5;
+    border-radius: 5px;
+    background-color: #291c22;
+    color: #fff;
+    font-family: "Inter", Arial, sans-serif;
+    font-size: .85rem;
+    font-weight: 700;
+    line-height: 1.3;
+    pointer-events: none;
+    box-shadow: 0 5px 15px rgb(0 0 0 / 25%);
+}
+
+
+/* ========================================
+   WEEK 4 - CART NOTIFICATION
+
+   The shared script removes the hidden attribute,
+   adds .show and hides the notification after 2.5s.
+======================================== */
+
+.cart-notification {
+    position: fixed;
+    right: 22px;
+    bottom: 24px;
+    z-index: 1100;
+    width: min(370px, calc(100vw - 32px));
+    padding: 15px 20px;
+    background-color: #164e3d;
+    color: #fff;
+    border-left: 5px solid #34d399;
+    border-radius: 7px;
+    box-shadow: 0 8px 28px rgb(0 0 0 / 35%);
+    font-size: .95rem;
+    font-weight: 600;
+    line-height: 1.5;
+    pointer-events: none;
+}
+
+.cart-notification.show {
+    animation: cart-notification-appear .2s ease-out;
+}
+
+@keyframes cart-notification-appear {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ========================================
+   WEEK 4 - CART CONTROLS AND SUMMARY
+======================================== */
+
+.cart-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.cart-item-info p {
+    margin: 6px 0;
+}
+
+.cart-item-total {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.quantity-button:disabled {
+    background-color: #4b5563;
+    color: #b3bbc7;
+    cursor: not-allowed;
+}
+
+.quantity-button:disabled:hover,
+.quantity-button:disabled:focus {
+    background-color: #4b5563;
+    color: #b3bbc7;
+}
+
+.clear-cart-button {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px 20px;
+    border: 1px solid var(--technical-blue);
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.clear-cart-button:disabled,
+#submitOrderButton:disabled {
+    color: #b3bbc7;
+    background-color: #4b5563;
+    border-color: #4b5563;
+    cursor: not-allowed;
+    opacity: .75;
+}
+
+.cart-summary > .product-button,
+.cart-summary > .secondary-button,
+.checkout-summary > .secondary-button {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.cart-help-text {
+    margin-top: 20px;
+    font-size: .85rem;
+    color: #cbd5e1;
+}
+
+/* Stick to the viewport without covering the shipping banner. */
+@media (min-width: 768px) {
+    .cart-summary,
+    .checkout-summary {
+        position: sticky;
+        top: 80px;
+        align-self: start;
+        max-height: calc(100vh - 96px);
+        overflow-y: auto;
+    }
+}
+
+
+/* ========================================
+   WEEK 4 - FORMS, BUTTONS AND ACCESSIBILITY
+======================================== */
+
+.form-message,
+#customPrintMessage {
+    color: var(--technical-blue);
+    font-weight: 600;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--signal-orange);
+    outline-offset: 3px;
+}
+
+/* Maintain the original hidden-attribute fix from Week 3. */
+[hidden] {
+    display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cart-notification.show {
+        animation: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .header-cart-summary {
+        gap: 8px 16px;
+        font-size: .95rem;
+        padding: 10px 12px;
+    }
+
+    .cart-summary,
+    .checkout-summary {
+        position: static;
+        max-height: none;
+        overflow: visible;
+    }
+
+    .cart-item-total {
+        text-align: left;
+    }
+
+    .cart-notification {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        width: auto;
+    }
+}
+
+
+/* ========================================
+   WEEK 4 - FLOATING EXPANDABLE SHOPPING CART
+
+   The cart starts collapsed in the lower-right corner.
+   Clicking its tab expands a scrollable cart above it.
+   Works on every page without extra HTML edits.
+======================================== */
+
+/* The floating cart replaces the redundant summary in the header. */
+.header-cart-summary {
+    display: none;
+}
+
+.quick-cart-root {
+    position: fixed;
+    right: 22px;
+    bottom: 20px;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    width: min(390px, calc(100vw - 32px));
+    pointer-events: none;
+}
+
+.quick-cart-root > * {
+    pointer-events: auto;
+}
+
+.quick-cart-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-width: 210px;
+    max-width: 100%;
+    min-height: 54px;
+    margin-left: auto;
+    padding: 11px 17px;
+    border: 1px solid #fb923c;
+    border-radius: 9px;
+    background: var(--signal-orange);
+    color: var(--deep-charcoal);
+    box-shadow: 0 8px 22px rgb(0 0 0 / 40%);
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.quick-cart-toggle:hover,
+.quick-cart-toggle:focus-visible {
+    background: #fb923c;
+}
+
+.quick-cart-toggle-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 26px;
+    height: 26px;
+    padding: 0 7px;
+    border-radius: 100px;
+    background: var(--deep-charcoal);
+    color: var(--off-white);
+    font-family: "Inter", sans-serif;
+    font-size: .8rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.quick-cart-toggle-total {
+    font-family: "Inter", sans-serif;
+    font-size: .9rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.quick-cart-toggle-arrow {
+    font-size: .8rem;
+}
+
+.quick-cart-panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: calc(100vh - 125px);
+    max-height: calc(100dvh - 125px);
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid #475569;
+    border-top: 4px solid var(--signal-orange);
+    border-radius: 10px;
+    background: var(--steel-gray);
+    box-shadow: 0 12px 40px rgb(0 0 0 / 55%);
+}
+
+.quick-cart-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 18px 12px;
+    border-bottom: 1px solid #475569;
+}
+
+.quick-cart-panel-header h2 {
+    margin: 0;
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.2;
+}
+
+.quick-cart-panel-header p {
+    margin: 3px 0 0;
+    font-size: .79rem;
+    color: #cbd5e1;
+}
+
+.quick-cart-close {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #64748b;
+    border-radius: 6px;
+    background: var(--deep-charcoal);
+    color: var(--off-white);
+    font-size: 1.35rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.quick-cart-items {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 0 18px;
+    overscroll-behavior: contain;
+}
+
+.quick-cart-item {
+    padding: 13px 0 15px;
+    border-bottom: 1px solid #475569;
+}
+
+.quick-cart-item-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.quick-cart-item h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.25;
+}
+
+.quick-cart-item .remove-cart-item {
+    margin: 0;
+    font-size: .78rem;
+}
+
+.quick-cart-unit-price {
+    margin: 5px 0 0;
+    color: #cbd5e1;
+    font-size: .85rem;
+}
+
+.quick-cart-item-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.quick-cart-item-bottom .quantity-controls {
+    margin-top: 8px;
+}
+
+.quick-cart-item-bottom strong {
+    color: var(--off-white);
+    font-variant-numeric: tabular-nums;
+}
+
+.quick-cart-panel-footer {
+    flex: 0 0 auto;
+    padding: 13px 18px 16px;
+    border-top: 1px solid #475569;
+    background: #171f2d;
+}
+
+.quick-cart-total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    font-size: .93rem;
+}
+
+.quick-cart-total-price {
+    margin-top: 5px;
+    font-size: 1.08rem;
+    font-weight: 700;
+}
+
+.quick-cart-total-price strong {
+    color: var(--signal-orange);
+    font-variant-numeric: tabular-nums;
+}
+
+.quick-cart-shipping {
+    margin: 7px 0 12px;
+    color: #cbd5e1;
+    font-size: .72rem;
+    line-height: 1.4;
+}
+
+.quick-cart-checkout {
+    display: block;
+    padding: 12px 15px;
+    border-radius: 5px;
+    background: var(--signal-orange);
+    color: var(--deep-charcoal);
+    text-align: center;
+    text-decoration: none;
+    font-family: "Rajdhani", sans-serif;
+    font-weight: 700;
+}
+
+.quick-cart-checkout:hover,
+.quick-cart-checkout:focus-visible {
+    background: var(--off-white);
+}
+
+.quick-cart-secondary-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 11px;
+}
+
+.quick-cart-secondary-actions button,
+.quick-cart-secondary-actions a {
+    padding: 4px 0;
+    background: transparent;
+    border: 0;
+    color: var(--technical-blue);
+    font-family: "Rajdhani", sans-serif;
+    font-size: .99rem;
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.quick-cart-secondary-actions button:disabled {
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.quick-cart-empty {
+    padding: 22px 0;
+    font-size: .93rem;
+}
+
+.quick-cart-empty a {
+    color: var(--technical-blue);
+}
+
+/* Keep the success notification clear of the cart tab. */
+.cart-notification {
+    bottom: 89px;
+}
+
+@media (max-width: 600px) {
+    .quick-cart-root {
+        right: 12px;
+        bottom: 12px;
+        width: calc(100vw - 24px);
+    }
+
+    .quick-cart-panel {
+        max-height: calc(100vh - 88px);
+        max-height: calc(100dvh - 88px);
+    }
+
+    .quick-cart-toggle {
+        min-height: 48px;
+        padding: 9px 14px;
+    }
+
+    .cart-notification {
+        bottom: 72px;
+    }
+}
