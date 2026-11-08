@@ -1,77 +1,63 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <!--
         Author: Adam Smithhisler
-        Date: 11/1/2026
-        Assignment: SDC260 Final Project - Week 4
-        Purpose: Custom 3D printing request page for
-                 One in 144. Allows customers to select
-                 printing options, provide project details,
-                 and submit a prototype print request.
+        Date: November 8, 2026
+        Assignment: SDC260 Final Project - Week 5
+
+        Purpose: Provide a configurable custom 3D
+        printing request form, a prototype price
+        estimate, and a future connection to the
+        One in 144 Smart Cart. No files are uploaded.
     -->
 
     <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <meta name="description"
-        content="Request custom 3D printed model parts and accessories for 1/144-scale kits, kitbashing, and diorama projects at One in 144.">
+          content="Configure a prototype custom 3D printing request for scale models, kitbash parts, and dioramas at One in 144.">
 
     <title>Custom 3D Printing | One in 144</title>
 
-    <!-- ========================================
-         FONTS
-    ========================================= -->
+    <!-- Fonts -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Michroma&family=Rajdhani:wght@500;600;700&display=swap"
         rel="stylesheet">
 
-    <!-- ========================================
-         STYLESHEET
-    ========================================= -->
-
+    <!-- Shared stylesheet and JavaScript -->
     <link rel="stylesheet" href="css/styles.css">
-
-    <!-- ========================================
-         SHARED JAVASCRIPT
-    ========================================= -->
-
     <script src="js/script.js" defer></script>
-
 </head>
 
 <body>
 
-    <!-- ========================================
-         HEADER AND NAVIGATION
-    ========================================= -->
+    <!-- =====================================
+         HEADER
+    ====================================== -->
 
     <header>
-
         <div class="header-content">
 
             <h1>One in 144</h1>
-
             <p>One Build. 144 Possibilities.</p>
 
             <nav aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
 
-                <a href="index.html">
-                    Home
-                </a>
-
-                <a href="shop.html">
-                    Shop
-                </a>
-
-                <a href="custom-print.html" aria-current="page">
+                <a href="custom-print.html"
+                   aria-current="page">
                     Custom Print
                 </a>
 
@@ -79,78 +65,45 @@
                     Builder Resources
                 </a>
 
-                <a href="contact.html">
-                    Contact
-                </a>
-
+                <a href="contact.html">Contact</a>
+                <a href="network-test.html">Network Test</a>
             </nav>
 
-            <!-- ========================================
-                 HEADER CART SUMMARY
-            ========================================= -->
-
-            <div class="header-cart-summary" id="headerCartSummary" aria-live="polite">
-
-                <span>
-                    Cart Items:
-                    <strong id="homeCartCount">0</strong>
-                </span>
-
-                <span>
-                    Subtotal:
-                    <strong id="homeCartSubtotal">$0.00</strong>
-                </span>
-
-                <a href="cart.html">
-                    View Cart
-                </a>
-
-            </div>
-
         </div>
-
     </header>
-
-    <!-- ========================================
-         FREE SHIPPING BANNER
-    ========================================= -->
 
     <div class="shipping-banner" role="status">
         FREE SHIPPING ON ORDERS $75 AND UP
     </div>
 
-    <!-- ========================================
-         MAIN CONTENT
-    ========================================= -->
-
     <main>
 
-        <!-- ========================================
-             CUSTOM PRINT HERO
-        ========================================= -->
+        <!-- =====================================
+             HERO SECTION
+        ====================================== -->
 
-        <section class="hero">
+        <section class="hero"
+                 aria-labelledby="custom-print-heading">
 
-            <p>
-                DESIGN • PRINT • BUILD
-            </p>
+            <p>DESIGN &bull; PRINT &bull; BUILD</p>
 
-            <h2>
+            <h2 id="custom-print-heading">
                 Custom 3D Printing
             </h2>
 
             <p>
-                Upload an original design or a design you
-                have permission to reproduce and request
-                a limited custom print for your next
-                model or diorama project.
+                Configure a custom part for your next
+                1/144-scale build. Select a file and
+                print options, review a prototype
+                estimate, and prepare the request
+                for your Smart Cart.
             </p>
 
         </section>
 
-        <!-- ========================================
+        <!-- =====================================
              HOW IT WORKS
-        ========================================= -->
+        ====================================== -->
 
         <section aria-labelledby="how-it-works-heading">
 
@@ -161,113 +114,99 @@
             <div class="category-grid">
 
                 <article class="category-card">
-
-                    <h3>
-                        1. Upload Your Design
-                    </h3>
-
+                    <h3>1. Choose Your Design</h3>
                     <p>
-                        Select a supported STL or OBJ model
-                        file for your custom printing request.
+                        Select an STL or OBJ file that
+                        you created or have permission
+                        to reproduce.
                     </p>
-
                 </article>
 
                 <article class="category-card">
-
-                    <h3>
-                        2. Select Print Options
-                    </h3>
-
+                    <h3>2. Configure the Print</h3>
                     <p>
-                        Choose the material, quantity,
-                        intended scale, and provide
-                        any necessary project notes.
+                        Choose the material, scale,
+                        detail level, finish, and
+                        quantity for your project.
                     </p>
-
                 </article>
 
                 <article class="category-card">
-
-                    <h3>
-                        3. Review Before Ordering
-                    </h3>
-
+                    <h3>3. Review the Estimate</h3>
                     <p>
-                        Custom designs require review and
-                        pricing before a printing order
-                        can be approved.
+                        View an illustrative cost estimate
+                        and add a prototype request
+                        to the Smart Cart.
                     </p>
-
                 </article>
 
             </div>
 
         </section>
 
-        <!-- ========================================
-             CUSTOM PRINT LAYOUT
-        ========================================= -->
+        <!-- =====================================
+             PRINT REQUEST LAYOUT
+        ====================================== -->
 
-        <section class="custom-print-layout" aria-label="Custom printing request">
-
-            <!-- ========================================
-                 CUSTOM PRINT REQUEST FORM
-            ========================================= -->
+        <section class="custom-print-layout"
+                 aria-label="Custom printing request and guidelines">
 
             <article class="custom-print-form">
 
-                <h2>
-                    Print Request
-                </h2>
+                <h2>Custom Print Request</h2>
 
-                <!--
-                    The form preserves the existing
-                    fields and names from Week 3.
+                <form id="customPrintForm">
 
-                    WEEK 4:
+                    <!-- Project name -->
+                    <div class="form-group">
 
-                    JavaScript can validate the form
-                    and display prototype feedback.
+                        <label for="print-name">
+                            Project Name
+                        </label>
 
-                    This static website does not have
-                    a server for receiving uploaded
-                    design files or actual orders.
-                -->
+                        <input
+                            type="text"
+                            id="print-name"
+                            name="print-name"
+                            maxlength="60"
+                            placeholder="Example: Custom shoulder armor"
+                            required>
 
-                <form id="customPrintForm" action="#" method="post" enctype="multipart/form-data">
+                    </div>
 
-                    <!-- ========================================
-                         DESIGN FILE
-                    ========================================= -->
-
+                    <!-- Design file -->
                     <div class="form-group">
 
                         <label for="design-file">
-                            Design File
+                            3D Design File
                         </label>
 
-                        <input type="file" id="design-file" name="design-file" accept=".stl,.obj" required>
+                        <input
+                            type="file"
+                            id="design-file"
+                            name="design-file"
+                            accept=".stl,.obj"
+                            required>
 
-                        <p class="prototype-note">
-                            Accepted formats: STL and OBJ.
-                            File processing is not active
-                            in this prototype.
+                        <p class="form-help">
+                            STL or OBJ only. Your browser
+                            reads the filename for this
+                            prototype; it does not upload
+                            the file.
                         </p>
 
                     </div>
 
-                    <!-- ========================================
-                         MATERIAL
-                    ========================================= -->
-
+                    <!-- Material -->
                     <div class="form-group">
 
                         <label for="material">
                             Material
                         </label>
 
-                        <select id="material" name="material" required>
+                        <select id="material"
+                                name="material"
+                                required>
 
                             <option value="standard-resin">
                                 Standard Resin
@@ -285,144 +224,248 @@
 
                     </div>
 
-                    <!-- ========================================
-                         QUANTITY
-                    ========================================= -->
-
-                    <div class="form-group">
-
-                        <label for="quantity">
-                            Quantity
-                        </label>
-
-                        <input type="number" id="quantity" name="quantity" min="1" max="10" step="1" value="1" required>
-
-                    </div>
-
-                    <!-- ========================================
-                         INTENDED SCALE
-                    ========================================= -->
-
+                    <!-- Scale -->
                     <div class="form-group">
 
                         <label for="scale">
                             Intended Scale
                         </label>
 
-                        <select id="scale" name="scale" required>
+                        <select id="scale"
+                                name="scale"
+                                required>
 
-                            <option value="1-144">
-                                1/144
-                            </option>
-
+                            <option value="1-144">1/144</option>
+                            <option value="1-100">1/100</option>
+                            <option value="1-72">1/72</option>
                             <option value="other">
-                                Other
+                                Other (manual review)
                             </option>
 
                         </select>
 
                     </div>
 
-                    <!-- ========================================
-                         PROJECT NOTES
-                    ========================================= -->
+                    <!-- Detail level -->
+                    <div class="form-group">
 
+                        <label for="detail-level">
+                            Print Detail
+                        </label>
+
+                        <select id="detail-level"
+                                name="detail-level"
+                                required>
+
+                            <option value="standard">
+                                Standard Detail
+                            </option>
+
+                            <option value="fine">
+                                Fine Detail
+                            </option>
+
+                            <option value="ultra">
+                                Ultra-Fine Detail
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Finish -->
+                    <div class="form-group">
+
+                        <label for="finish">
+                            Finish
+                        </label>
+
+                        <select id="finish"
+                                name="finish"
+                                required>
+
+                            <option value="raw">
+                                Unpainted / Raw Print
+                            </option>
+
+                            <option value="primed">
+                                Primed for Painting
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="form-group">
+
+                        <label for="quantity">
+                            Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            id="quantity"
+                            name="quantity"
+                            min="1"
+                            max="10"
+                            step="1"
+                            value="1"
+                            required>
+
+                    </div>
+
+                    <!-- Project notes -->
                     <div class="form-group">
 
                         <label for="notes">
                             Project Notes
                         </label>
 
-                        <textarea id="notes" name="notes" rows="6"
-                            placeholder="Describe the part, intended use, fit requirements, or other important details."></textarea>
+                        <textarea
+                            id="notes"
+                            name="notes"
+                            rows="5"
+                            maxlength="500"
+                            placeholder="Describe fit requirements, dimensions, or other details for review."></textarea>
 
                     </div>
 
-                    <!-- ========================================
-                         DESIGN PERMISSION
-                    ========================================= -->
-
+                    <!-- Design permission -->
                     <div class="form-group checkbox-group">
 
-                        <input type="checkbox" id="permission" name="permission" required>
+                        <input
+                            type="checkbox"
+                            id="permission"
+                            name="permission"
+                            required>
 
                         <label for="permission">
-                            I confirm that I created this
-                            design or have permission to
-                            reproduce it.
+                            I created this design or
+                            have permission to reproduce it.
                         </label>
 
                     </div>
 
-                    <!-- ========================================
-                         SUBMIT BUTTON
-                    ========================================= -->
+                    <!-- Form validation -->
+                    <button
+                        type="submit"
+                        class="product-button"
+                        id="customPrintSubmit">
 
-                    <button class="product-button" type="submit" id="customPrintSubmit">
-
-                        Submit Print Request
+                        Review Print Request
 
                     </button>
 
-                    <!--
-                        JavaScript will use this element
-                        for prototype submission feedback.
-
-                        No actual file upload or order
-                        transmission is implemented.
-                    -->
-
-                    <p id="customPrintMessage" class="form-message" role="status" aria-live="polite">
+                    <p id="customPrintMessage"
+                       class="form-message"
+                       role="status"
+                       aria-live="polite">
                     </p>
 
                 </form>
 
             </article>
 
-            <!-- ========================================
-                 PRINT GUIDELINES
-            ========================================= -->
+            <!-- =====================================
+                 ESTIMATED PRICING
+            ====================================== -->
 
             <aside class="print-guidelines">
 
-                <h2>
-                    Print Guidelines
-                </h2>
+                <h2>Estimated Pricing</h2>
+
+                <!-- JavaScript updates pricing -->
+                <div class="custom-print-estimate"
+                     aria-live="polite"
+                     aria-atomic="true">
+
+                    <div class="summary-row">
+                        <span>Price per unit</span>
+                        <strong id="estimateUnitPrice">
+                            Calculating...
+                        </strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Quantity</span>
+                        <strong id="estimateQuantity">
+                            1
+                        </strong>
+                    </div>
+
+                    <div class="summary-row summary-total">
+                        <span>Estimated total</span>
+                        <strong id="estimateTotal">
+                            Calculating...
+                        </strong>
+                    </div>
+
+                    <p id="estimateBreakdown"
+                       class="form-help">
+                        Prices will respond to your
+                        print selections.
+                    </p>
+
+                </div>
+
+                <!-- Smart Cart integration -->
+                <button
+                    type="button"
+                    class="product-button"
+                    id="addCustomPrintToCart"
+                    disabled>
+
+                    Add Estimate to Smart Cart
+
+                </button>
+
+                <p id="customPrintCartMessage"
+                   class="form-message"
+                   role="status"
+                   aria-live="polite">
+                </p>
+
+                <!-- =====================================
+                     PRINT GUIDELINES
+                ====================================== -->
+
+                <h2>Print Guidelines</h2>
 
                 <ul>
-
                     <li>
-                        Orders are intended for personal
-                        hobby projects.
+                        Custom printing is intended
+                        for small-scale hobby projects.
                     </li>
 
                     <li>
-                        Quantity is limited to small
-                        production runs.
+                        Quantity is limited to
+                        1–10 pieces per request.
                     </li>
 
                     <li>
-                        Designs must be original or
-                        authorized for reproduction.
+                        Only original or authorized
+                        designs may be submitted.
                     </li>
 
                     <li>
-                        Oversized or unusually complex
-                        designs may not be accepted.
+                        Complex geometry, dimensions,
+                        and print feasibility require review.
                     </li>
 
                     <li>
-                        Pricing and approval will be
-                        reviewed before checkout.
+                        Custom estimates do not include
+                        shipping or checkout discounts.
                     </li>
-
                 </ul>
 
-                <p>
-                    <strong>Prototype Notice:</strong>
-                    File processing, automatic pricing,
-                    and actual order submission are not
-                    active during this stage of development.
+                <p class="prototype-note">
+                    <strong>Classroom Prototype:</strong>
+                    Estimates are illustrative and are not
+                    based on a real model-volume analysis.
+                    Selecting a design file does not upload it.
+                    Adding a request to the Smart Cart does not
+                    create a real order or approve a print job.
                 </p>
 
             </aside>
@@ -431,24 +474,16 @@
 
     </main>
 
-    <!-- ========================================
+    <!-- =====================================
          FOOTER
-    ========================================= -->
+    ====================================== -->
 
     <footer>
-
         <p>
-            <a href="contact.html">
-                Contact Us
-            </a>
+            <a href="contact.html">Contact Us</a>
         </p>
-
-        <p>
-            &copy; 2026 One in 144
-        </p>
-
+        <p>&copy; 2026 One in 144</p>
     </footer>
 
 </body>
-
 </html>

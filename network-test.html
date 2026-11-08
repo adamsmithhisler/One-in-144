@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+        Author: Adam Smithhisler
+        Date: November 8, 2026
+        Assignment: SDC260 Final Project - Week 5
+        Purpose: Display the website's local host, communication port,
+                 transmission protocol, and previous launch time.
+                 Detect whether the website runs through a local server,
+                 a hosted website, or as a static HTML file.
+    -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="One in 144 network connection test and local development information.">
+    <title>Network Connection Test | One in 144</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Michroma&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Reuse the existing website stylesheet and Smart Cart. -->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js" defer></script>
+    <script src="js/network-test.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>One in 144</h1>
+            <p>One Build. 144 Possibilities.</p>
+
+            <nav aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="custom-print.html">Custom Print</a>
+                <a href="resources.html">Builder Resources</a>
+                <a href="contact.html">Contact</a>
+                <a href="network-test.html" aria-current="page">Network Test</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="shipping-banner" role="status">
+        FREE SHIPPING ON ORDERS $75 AND UP
+    </div>
+
+    <main>
+        <section class="hero" aria-labelledby="network-heading">
+            <p>SYSTEM DIAGNOSTICS • CONNECTION STATUS</p>
+            <h2 id="network-heading">Network Connection Test</h2>
+            <p>Verify how the One in 144 website is being opened and review its connection information.</p>
+        </section>
+
+        <section aria-labelledby="status-heading">
+            <h2 id="status-heading">Connection Status</h2>
+            <article class="category-card">
+                <h3 id="connectionStatus" role="status" aria-live="polite">Checking connection...</h3>
+                <p id="connectionDescription">Reading the current website address.</p>
+            </article>
+        </section>
+
+        <section aria-labelledby="information-heading">
+            <h2 id="information-heading">System Information</h2>
+            <div class="category-grid">
+                <article class="category-card">
+                    <h3>Local Host Name</h3>
+                    <p id="hostInfo">Checking...</p>
+                </article>
+                <article class="category-card">
+                    <h3>Current Communication Port</h3>
+                    <p id="portInfo">Checking...</p>
+                </article>
+                <article class="category-card">
+                    <h3>Current Transmission Protocol</h3>
+                    <p id="protocolInfo">Checking...</p>
+                </article>
+                <article class="category-card">
+                    <h3>Last Time Launched</h3>
+                    <p id="lastLaunchInfo">Checking...</p>
+                </article>
+            </div>
+        </section>
+
+        <section aria-labelledby="testing-heading">
+            <h2 id="testing-heading">Test Instructions</h2>
+            <div class="category-card">
+                <p>Open this page through VS Code Live Preview to verify the local server. Refresh it to confirm that the previous launch timestamp is remembered.</p>
+                <p>Opening the HTML file directly will display Static File Mode instead. This checks the page's launch environment, not internet connectivity.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p><a href="contact.html">Contact Us</a></p>
+        <p>&copy; 2026 One in 144</p>
+    </footer>
+</body>
+</html>

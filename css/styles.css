@@ -1,10 +1,13 @@
+
 /*
     Author: Adam Smithhisler
-    Date: 10/27/2026
-    Assignment: Final Project - Interactive E-Commerce Features
-    Purpose: Shared styling for the One in 144 e-commerce website.
+    Date: November 8, 2026
+    Assignment: SDC260 Final Project - Week 5
+    Purpose: Complete shared styling for One in 144,
+    including the product catalog, inventory system,
+    expandable Smart Cart, checkout, custom 3D
+    printing estimator, and responsive layouts.
 */
-
 
 /* ========================================
    BRAND COLORS
@@ -19,7 +22,6 @@
     --light-gray: #F3F4F6;
 }
 
-
 /* ========================================
    GLOBAL PAGE STYLES
 ======================================== */
@@ -30,6 +32,10 @@
 
 [hidden] {
     display: none !important;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -51,7 +57,6 @@ img {
     height: auto;
 }
 
-
 /* ========================================
    TYPOGRAPHY
 ======================================== */
@@ -72,7 +77,6 @@ h2,
 h3 {
     color: var(--off-white);
 }
-
 
 /* ========================================
    HEADER AND NAVIGATION
@@ -122,16 +126,21 @@ nav a[aria-current="page"] {
     color: var(--technical-blue);
 }
 
-
 /* ========================================
    FREE SHIPPING BANNER
 ======================================== */
 
 .shipping-banner {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
     width: 100%;
     padding: 12px 20px;
+
     background-color: var(--signal-orange);
     color: var(--deep-charcoal);
+
     text-align: center;
     font-family: "Rajdhani", sans-serif;
     font-size: 1.4rem;
@@ -140,7 +149,6 @@ nav a[aria-current="page"] {
     letter-spacing: 1.5px;
     text-transform: uppercase;
 }
-
 
 /* ========================================
    HERO SECTION
@@ -153,7 +161,7 @@ nav a[aria-current="page"] {
     text-align: center;
 }
 
-.hero>p:first-child {
+.hero > p:first-child {
     margin: 0 0 20px 0;
     color: var(--technical-blue);
     font-family: "Rajdhani", sans-serif;
@@ -193,7 +201,6 @@ nav a[aria-current="page"] {
     color: var(--deep-charcoal);
 }
 
-
 /* ========================================
    PAGE SECTIONS
 ======================================== */
@@ -202,14 +209,13 @@ section {
     margin-bottom: 40px;
 }
 
-section>h2 {
+section > h2 {
     margin-bottom: 20px;
 }
 
 .section-description {
     margin-bottom: 25px;
 }
-
 
 /* ========================================
    CARD LAYOUTS
@@ -233,7 +239,6 @@ section>h2 {
 .product-card h3 {
     margin-top: 0;
 }
-
 
 /* ========================================
    PRODUCT CARDS
@@ -294,7 +299,6 @@ button.add-to-cart:focus-visible,
     outline-offset: 4px;
 }
 
-
 /* ========================================
    PRODUCT PAGE ADD TO CART
 ======================================== */
@@ -303,9 +307,9 @@ button.add-to-cart.product-page-add-to-cart {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
 
-    margin: 18px 0 0 0;
+    width: 100%;
+    margin: 18px 0 0;
     padding: 14px 20px;
 
     background-color: var(--signal-orange);
@@ -338,7 +342,6 @@ button.add-to-cart.product-page-add-to-cart:focus-visible {
     outline-offset: 4px;
 }
 
-
 /* ========================================
    CUSTOM PRINT PROMOTION SECTION
 ======================================== */
@@ -368,7 +371,6 @@ button.add-to-cart.product-page-add-to-cart:focus-visible {
     background-color: var(--off-white);
     color: var(--deep-charcoal);
 }
-
 
 /* ========================================
    BUTTONS
@@ -420,7 +422,6 @@ button.add-to-cart.product-page-add-to-cart:focus-visible {
     outline-offset: 4px;
 }
 
-
 /* ========================================
    PRODUCT DETAILS PAGE
 ======================================== */
@@ -464,7 +465,6 @@ button.add-to-cart.product-page-add-to-cart:focus-visible {
     color: var(--technical-blue);
 }
 
-
 /* ========================================
    CUSTOM PRINT PAGE
 ======================================== */
@@ -478,6 +478,7 @@ button.add-to-cart.product-page-add-to-cart:focus-visible {
 
 .custom-print-form,
 .print-guidelines {
+    min-width: 0;
     background-color: var(--steel-gray);
     padding: 25px;
     border-radius: 8px;
@@ -491,7 +492,6 @@ button.add-to-cart.product-page-add-to-cart:focus-visible {
 .print-guidelines h2 {
     margin-top: 0;
 }
-
 
 /* ========================================
    FORM STYLES
@@ -549,7 +549,6 @@ button.add-to-cart.product-page-add-to-cart:focus-visible {
     margin-top: 5px;
 }
 
-
 /* ========================================
    FORM STATUS MESSAGES
 ======================================== */
@@ -561,7 +560,6 @@ button.add-to-cart.product-page-add-to-cart:focus-visible {
     color: var(--technical-blue);
     font-weight: 600;
 }
-
 
 /* ========================================
    PRINT GUIDELINES
@@ -580,7 +578,6 @@ button.add-to-cart.product-page-add-to-cart:focus-visible {
     padding-top: 20px;
     border-top: 1px solid #475569;
 }
-
 
 /* ========================================
    BUILDER RESOURCES PAGE
@@ -617,7 +614,6 @@ button.add-to-cart.product-page-add-to-cart:focus-visible {
 .resource-card li {
     margin-bottom: 8px;
 }
-
 
 /* ========================================
    SHOPPING CART PAGE
@@ -679,7 +675,6 @@ button.add-to-cart.product-page-add-to-cart:focus-visible {
     margin-bottom: 20px;
     font-size: 1.1rem;
 }
-
 
 /* ========================================
    CART CONTROLS
@@ -743,10 +738,9 @@ button.add-to-cart.product-page-add-to-cart:focus-visible {
     min-width: 120px;
 }
 
-.cart-item-total>p:first-child {
+.cart-item-total > p:first-child {
     margin-top: 0;
 }
-
 
 /* ========================================
    CHECKOUT PAGE
@@ -812,7 +806,6 @@ button.add-to-cart.product-page-add-to-cart:focus-visible {
     padding-left: 0;
 }
 
-
 /* ========================================
    ORDER CONFIRMATION PAGE
 ======================================== */
@@ -834,7 +827,7 @@ button.add-to-cart.product-page-add-to-cart:focus-visible {
 }
 
 .confirmation-label {
-    margin: 0 0 15px 0;
+    margin: 0 0 15px;
     color: var(--technical-blue);
     font-family: "Rajdhani", sans-serif;
     font-weight: 700;
@@ -861,7 +854,6 @@ button.add-to-cart.product-page-add-to-cart:focus-visible {
     align-items: center;
     gap: 15px;
 }
-
 
 /* ========================================
    FOOTER
@@ -896,11 +888,9 @@ footer a:focus-visible {
     outline-offset: 4px;
 }
 
-
 /* ========================================
    RESPONSIVE LAYOUT
 ======================================== */
-
 
 /* Tablet */
 
@@ -949,7 +939,6 @@ footer a:focus-visible {
     }
 }
 
-
 /* Desktop */
 
 @media (min-width: 1024px) {
@@ -960,8 +949,7 @@ footer a:focus-visible {
     }
 }
 
-
-/* Small Screens */
+/* Small screens */
 
 @media (max-width: 767px) {
 
@@ -992,24 +980,13 @@ footer a:focus-visible {
 }
 
 /* ========================================
-   WEEK 4 - SHARED HEADER CART SUMMARY
-   Compatible with all nine updated HTML pages.
+   WEEK 4 - HEADER CART COMPATIBILITY
 ======================================== */
 
+/* The floating cart replaces the header summary. */
+
 .header-cart-summary {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 8px 24px;
-    max-width: 700px;
-    margin: 18px auto 0;
-    padding: 12px 18px;
-    background-color: var(--deep-charcoal);
-    border: 1px solid #475569;
-    border-radius: 6px;
-    font-family: "Rajdhani", sans-serif;
-    font-size: 1.05rem;
+    display: none;
 }
 
 .header-cart-summary strong {
@@ -1019,13 +996,6 @@ footer a:focus-visible {
 
 .header-cart-summary a {
     color: var(--technical-blue);
-    font-weight: 700;
-    text-decoration: underline;
-}
-
-.header-cart-summary a:hover,
-.header-cart-summary a:focus-visible {
-    color: var(--off-white);
 }
 
 .nav-cart-link {
@@ -1045,19 +1015,11 @@ footer a:focus-visible {
     background-color: var(--signal-orange);
     color: var(--deep-charcoal);
     font-family: "Inter", Arial, sans-serif;
-    font-size: .8rem;
+    font-size: 0.8rem;
     font-weight: 700;
     line-height: 1;
     font-variant-numeric: tabular-nums;
 }
-
-/* Keep the promotional banner visible as the page scrolls. */
-.shipping-banner {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
 
 /* ========================================
    WEEK 4 - LIVE PRODUCT STOCK
@@ -1078,7 +1040,7 @@ footer a:focus-visible {
 .product-info.out-of-stock {
     background-color: #262b35;
     border: 1px solid #657080;
-    opacity: .65;
+    opacity: 0.65;
 }
 
 .product-card.out-of-stock {
@@ -1091,7 +1053,8 @@ footer a:focus-visible {
     color: #fca5a5;
 }
 
-/* The button cannot be used when inventory is zero. */
+/* Disable Add to Cart when stock reaches zero. */
+
 button.add-to-cart:disabled,
 button.add-to-cart.product-page-add-to-cart:disabled {
     color: #b3bbc7;
@@ -1101,7 +1064,6 @@ button.add-to-cart.product-page-add-to-cart:disabled {
     opacity: 1;
 }
 
-/* The detailed product page uses a full-size button. */
 button.add-to-cart.product-page-add-to-cart:disabled:hover,
 button.add-to-cart.product-page-add-to-cart:disabled:focus {
     color: #b3bbc7;
@@ -1113,63 +1075,81 @@ button.add-to-cart.product-page-add-to-cart:disabled:focus {
     font-weight: 700;
 }
 
-/* Tooltip follows the mouse; its coordinates are set by JavaScript. */
+/* ========================================
+   OUT-OF-STOCK TOOLTIP
+======================================== */
+
 .out-of-stock-tooltip {
     position: fixed;
     z-index: 9999;
+
     width: max-content;
     max-width: 160px;
+
     padding: 7px 11px;
+
     border: 1px solid #fca5a5;
     border-radius: 5px;
+
     background-color: #291c22;
     color: #fff;
+
     font-family: "Inter", Arial, sans-serif;
-    font-size: .85rem;
+    font-size: 0.85rem;
     font-weight: 700;
     line-height: 1.3;
+
     pointer-events: none;
+
     box-shadow: 0 5px 15px rgb(0 0 0 / 25%);
 }
 
-
 /* ========================================
-   WEEK 4 - CART NOTIFICATION
-
-   The shared script removes the hidden attribute,
-   adds .show and hides the notification after 2.5s.
+   CART NOTIFICATION
 ======================================== */
 
 .cart-notification {
     position: fixed;
     right: 22px;
-    bottom: 24px;
+    bottom: 89px;
     z-index: 1100;
+
     width: min(370px, calc(100vw - 32px));
     padding: 15px 20px;
+
     background-color: #164e3d;
     color: #fff;
+
     border-left: 5px solid #34d399;
     border-radius: 7px;
+
     box-shadow: 0 8px 28px rgb(0 0 0 / 35%);
-    font-size: .95rem;
+
+    font-size: 0.95rem;
     font-weight: 600;
     line-height: 1.5;
+
     pointer-events: none;
 }
 
 .cart-notification.show {
-    animation: cart-notification-appear .2s ease-out;
+    animation: cart-notification-appear 0.2s ease-out;
 }
 
 @keyframes cart-notification-appear {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-
 /* ========================================
-   WEEK 4 - CART CONTROLS AND SUMMARY
+   WEEK 4 - CART SUMMARY
 ======================================== */
 
 .cart-item-info {
@@ -1203,8 +1183,10 @@ button.add-to-cart.product-page-add-to-cart:disabled:focus {
     width: 100%;
     margin-top: 12px;
     padding: 12px 20px;
+
     border: 1px solid var(--technical-blue);
     border-radius: 4px;
+
     text-align: center;
     font-weight: 700;
 }
@@ -1215,7 +1197,7 @@ button.add-to-cart.product-page-add-to-cart:disabled:focus {
     background-color: #4b5563;
     border-color: #4b5563;
     cursor: not-allowed;
-    opacity: .75;
+    opacity: 0.75;
 }
 
 .cart-summary > .product-button,
@@ -1228,12 +1210,14 @@ button.add-to-cart.product-page-add-to-cart:disabled:focus {
 
 .cart-help-text {
     margin-top: 20px;
-    font-size: .85rem;
+    font-size: 0.85rem;
     color: #cbd5e1;
 }
 
-/* Stick to the viewport without covering the shipping banner. */
+/* Sticky summary panels on larger screens. */
+
 @media (min-width: 768px) {
+
     .cart-summary,
     .checkout-summary {
         position: sticky;
@@ -1244,9 +1228,8 @@ button.add-to-cart.product-page-add-to-cart:disabled:focus {
     }
 }
 
-
 /* ========================================
-   WEEK 4 - FORMS, BUTTONS AND ACCESSIBILITY
+   WEEK 4 - FORMS AND ACCESSIBILITY
 ======================================== */
 
 .form-message,
@@ -1268,23 +1251,18 @@ a:focus-visible {
     outline-offset: 3px;
 }
 
-/* Maintain the original hidden-attribute fix from Week 3. */
 [hidden] {
     display: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .cart-notification.show {
         animation: none;
     }
 }
 
 @media (max-width: 767px) {
-    .header-cart-summary {
-        gap: 8px 16px;
-        font-size: .95rem;
-        padding: 10px 12px;
-    }
 
     .cart-summary,
     .checkout-summary {
@@ -1300,35 +1278,28 @@ a:focus-visible {
     .cart-notification {
         left: 16px;
         right: 16px;
-        bottom: 16px;
+        bottom: 72px;
         width: auto;
     }
 }
 
-
 /* ========================================
-   WEEK 4 - FLOATING EXPANDABLE SHOPPING CART
-
-   The cart starts collapsed in the lower-right corner.
-   Clicking its tab expands a scrollable cart above it.
-   Works on every page without extra HTML edits.
+   WEEK 4 - FLOATING EXPANDABLE SMART CART
 ======================================== */
-
-/* The floating cart replaces the redundant summary in the header. */
-.header-cart-summary {
-    display: none;
-}
 
 .quick-cart-root {
     position: fixed;
     right: 22px;
     bottom: 20px;
     z-index: 1200;
+
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 10px;
+
     width: min(390px, calc(100vw - 32px));
+
     pointer-events: none;
 }
 
@@ -1336,24 +1307,35 @@ a:focus-visible {
     pointer-events: auto;
 }
 
+/* ========================================
+   FLOATING CART BUTTON
+======================================== */
+
 .quick-cart-toggle {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 14px;
+
     min-width: 210px;
     max-width: 100%;
     min-height: 54px;
+
     margin-left: auto;
     padding: 11px 17px;
+
     border: 1px solid #fb923c;
     border-radius: 9px;
+
     background: var(--signal-orange);
     color: var(--deep-charcoal);
+
     box-shadow: 0 8px 22px rgb(0 0 0 / 40%);
+
     font-family: "Rajdhani", sans-serif;
     font-size: 1.15rem;
     font-weight: 700;
+
     cursor: pointer;
 }
 
@@ -1366,39 +1348,54 @@ a:focus-visible {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     min-width: 26px;
     height: 26px;
     padding: 0 7px;
+
     border-radius: 100px;
+
     background: var(--deep-charcoal);
     color: var(--off-white);
+
     font-family: "Inter", sans-serif;
-    font-size: .8rem;
+    font-size: 0.8rem;
+
     font-variant-numeric: tabular-nums;
 }
 
 .quick-cart-toggle-total {
     font-family: "Inter", sans-serif;
-    font-size: .9rem;
+    font-size: 0.9rem;
     font-variant-numeric: tabular-nums;
 }
 
 .quick-cart-toggle-arrow {
-    font-size: .8rem;
+    font-size: 0.8rem;
 }
+
+/* ========================================
+   EXPANDED SMART CART PANEL
+======================================== */
 
 .quick-cart-panel {
     display: flex;
     flex-direction: column;
+
     width: 100%;
+
     max-height: calc(100vh - 125px);
     max-height: calc(100dvh - 125px);
+
     margin: 0;
     overflow: hidden;
+
     border: 1px solid #475569;
     border-top: 4px solid var(--signal-orange);
     border-radius: 10px;
+
     background: var(--steel-gray);
+
     box-shadow: 0 12px 40px rgb(0 0 0 / 55%);
 }
 
@@ -1407,7 +1404,9 @@ a:focus-visible {
     justify-content: space-between;
     align-items: flex-start;
     gap: 12px;
+
     padding: 16px 18px 12px;
+
     border-bottom: 1px solid #475569;
 }
 
@@ -1420,28 +1419,39 @@ a:focus-visible {
 
 .quick-cart-panel-header p {
     margin: 3px 0 0;
-    font-size: .79rem;
+    font-size: 0.79rem;
     color: #cbd5e1;
 }
 
 .quick-cart-close {
     flex-shrink: 0;
+
     width: 32px;
     height: 32px;
+
     border: 1px solid #64748b;
     border-radius: 6px;
+
     background: var(--deep-charcoal);
     color: var(--off-white);
+
     font-size: 1.35rem;
     line-height: 1;
+
     cursor: pointer;
 }
+
+/* ========================================
+   FLOATING CART ITEMS
+======================================== */
 
 .quick-cart-items {
     flex: 1 1 auto;
     min-height: 0;
+
     overflow-y: auto;
     padding: 0 18px;
+
     overscroll-behavior: contain;
 }
 
@@ -1465,13 +1475,13 @@ a:focus-visible {
 
 .quick-cart-item .remove-cart-item {
     margin: 0;
-    font-size: .78rem;
+    font-size: 0.78rem;
 }
 
 .quick-cart-unit-price {
     margin: 5px 0 0;
     color: #cbd5e1;
-    font-size: .85rem;
+    font-size: 0.85rem;
 }
 
 .quick-cart-item-bottom {
@@ -1490,9 +1500,15 @@ a:focus-visible {
     font-variant-numeric: tabular-nums;
 }
 
+/* ========================================
+   FLOATING CART SUMMARY
+======================================== */
+
 .quick-cart-panel-footer {
     flex: 0 0 auto;
+
     padding: 13px 18px 16px;
+
     border-top: 1px solid #475569;
     background: #171f2d;
 }
@@ -1502,7 +1518,8 @@ a:focus-visible {
     align-items: center;
     justify-content: space-between;
     gap: 15px;
-    font-size: .93rem;
+
+    font-size: 0.93rem;
 }
 
 .quick-cart-total-price {
@@ -1519,18 +1536,22 @@ a:focus-visible {
 .quick-cart-shipping {
     margin: 7px 0 12px;
     color: #cbd5e1;
-    font-size: .72rem;
+    font-size: 0.72rem;
     line-height: 1.4;
 }
 
 .quick-cart-checkout {
     display: block;
+
     padding: 12px 15px;
     border-radius: 5px;
+
     background: var(--signal-orange);
     color: var(--deep-charcoal);
+
     text-align: center;
     text-decoration: none;
+
     font-family: "Rajdhani", sans-serif;
     font-weight: 700;
 }
@@ -1552,10 +1573,13 @@ a:focus-visible {
     padding: 4px 0;
     background: transparent;
     border: 0;
+
     color: var(--technical-blue);
+
     font-family: "Rajdhani", sans-serif;
-    font-size: .99rem;
+    font-size: 0.99rem;
     font-weight: 700;
+
     text-decoration: underline;
     cursor: pointer;
 }
@@ -1567,19 +1591,324 @@ a:focus-visible {
 
 .quick-cart-empty {
     padding: 22px 0;
-    font-size: .93rem;
+    font-size: 0.93rem;
 }
 
 .quick-cart-empty a {
     color: var(--technical-blue);
 }
 
-/* Keep the success notification clear of the cart tab. */
-.cart-notification {
-    bottom: 89px;
+/* ========================================
+   WEEK 5 - CUSTOM 3D PRINT PRICING
+======================================== */
+
+.custom-print-estimate {
+    width: 100%;
+    margin: 18px 0 20px;
 }
 
+.custom-print-estimate .summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid #475569;
+}
+
+.custom-print-estimate .summary-row > span {
+    min-width: 0;
+    color: var(--off-white);
+}
+
+.custom-print-estimate .summary-row > strong {
+    flex-shrink: 0;
+    color: var(--off-white);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.custom-print-estimate .summary-total {
+    margin-bottom: 0;
+    border-bottom: 2px solid #64748b;
+
+    font-size: 1.08rem;
+    font-weight: 700;
+}
+
+#estimateTotal {
+    color: var(--signal-orange);
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+#estimateUnitPrice,
+#estimateQuantity {
+    font-weight: 700;
+}
+
+#estimateBreakdown {
+    margin: 14px 0 16px;
+    padding-top: 15px;
+
+    border-top: 1px solid #475569;
+
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
+}
+
+/* ========================================
+   WEEK 5 - CUSTOM PRINT BUTTON
+======================================== */
+
+#addCustomPrintToCart {
+    display: inline-block;
+    max-width: 100%;
+
+    padding: 12px 18px;
+    margin: 4px 0 12px;
+
+    background: var(--signal-orange);
+    color: var(--deep-charcoal);
+
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+
+    border: none;
+    border-radius: 4px;
+
+    cursor: pointer;
+}
+
+#addCustomPrintToCart:not(:disabled):hover,
+#addCustomPrintToCart:not(:disabled):focus-visible {
+    background: var(--off-white);
+    color: var(--deep-charcoal);
+}
+
+/* A request must be reviewed before adding it. */
+
+#addCustomPrintToCart:disabled {
+    background: #4b5563;
+    color: #d1d5db;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+#addCustomPrintToCart:disabled:hover {
+    background: #4b5563;
+    color: #d1d5db;
+}
+
+/* ========================================
+   WEEK 5 - CUSTOM PRINT VALIDATION
+======================================== */
+
+#customPrintMessage,
+#customPrintCartMessage {
+    margin: 12px 0;
+    padding: 0;
+
+    border: 0;
+
+    color: var(--technical-blue);
+
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.55;
+
+    overflow-wrap: anywhere;
+}
+
+#customPrintMessage:empty,
+#customPrintCartMessage:empty {
+    display: none;
+}
+
+/* ========================================
+   WEEK 5 - CUSTOM PRINT FORM
+======================================== */
+
+.custom-print-form .form-group {
+    margin-bottom: 20px;
+}
+
+.custom-print-form .form-group label {
+    font-family: "Rajdhani", sans-serif;
+    font-weight: 700;
+}
+
+.custom-print-form input,
+.custom-print-form select,
+.custom-print-form textarea {
+    max-width: 100%;
+}
+
+.custom-print-form input[type="file"] {
+    max-width: 100%;
+    cursor: pointer;
+}
+
+.custom-print-form input[type="file"]::file-selector-button {
+    margin-right: 10px;
+    padding: 7px 10px;
+
+    border: none;
+    border-radius: 3px;
+
+    background: var(--light-gray);
+    color: var(--deep-charcoal);
+
+    cursor: pointer;
+}
+
+.custom-print-form input[type="file"]::file-selector-button:hover {
+    background: var(--technical-blue);
+}
+
+.custom-print-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.custom-print-form .form-help {
+    color: #cbd5e1;
+    font-size: 0.88rem;
+    line-height: 1.55;
+
+    overflow-wrap: anywhere;
+}
+
+/* ========================================
+   WEEK 5 - DESIGN PERMISSION CHECKBOX
+======================================== */
+
+.custom-print-form .checkbox-group {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.custom-print-form .checkbox-group input[type="checkbox"] {
+    flex: 0 0 auto;
+
+    width: 16px;
+    height: 16px;
+    margin-top: 5px;
+
+    accent-color: var(--signal-orange);
+}
+
+.custom-print-form .checkbox-group label {
+    flex: 1 1 auto;
+    cursor: pointer;
+}
+
+/* ========================================
+   WEEK 5 - CUSTOM SMART CART ITEM DETAILS
+======================================== */
+
+/*
+    Display selected print settings inside:
+    - Expandable Smart Cart
+    - Full Cart page
+    - Checkout
+    - Confirmation
+*/
+
+.custom-cart-details {
+    margin: 9px 0;
+    padding: 9px 11px;
+
+    border-left: 3px solid var(--technical-blue);
+    border-radius: 3px;
+
+    background: rgb(17 24 39 / 55%);
+    color: #cbd5e1;
+
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 1.55;
+
+    overflow-wrap: anywhere;
+}
+
+.quick-cart-item .custom-cart-details {
+    margin: 8px 0;
+    font-size: 0.8rem;
+}
+
+.cart-item .custom-cart-details,
+.checkout-item .custom-cart-details {
+    max-width: 100%;
+}
+
+.checkout-item > div {
+    min-width: 0;
+}
+
+/* ========================================
+   WEEK 5 - PRINT GUIDELINES
+======================================== */
+
+.print-guidelines {
+    min-width: 0;
+}
+
+.print-guidelines h2 {
+    margin-bottom: 15px;
+}
+
+.print-guidelines ul {
+    padding-left: 20px;
+}
+
+.print-guidelines li {
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+.print-guidelines .prototype-note {
+    margin-top: 20px;
+    padding-top: 20px;
+
+    border-top: 1px solid #475569;
+
+    color: var(--technical-blue);
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
+}
+
+/* ========================================
+   WEEK 5 - FLOATING CART CLEARANCE
+======================================== */
+
+/*
+    Provide enough scrolling space below
+    the custom printing form so the fixed
+    cart button does not permanently cover
+    the final instructions.
+*/
+
+main:has(#customPrintForm) {
+    padding-bottom: 130px;
+}
+
+/* ========================================
+   RESPONSIVE QUICK CART
+======================================== */
+
 @media (max-width: 600px) {
+
     .quick-cart-root {
         right: 12px;
         bottom: 12px;
@@ -1598,5 +1927,58 @@ a:focus-visible {
 
     .cart-notification {
         bottom: 72px;
+    }
+}
+
+/* ========================================
+   WEEK 5 - RESPONSIVE CUSTOM PRINT PAGE
+======================================== */
+
+@media (max-width: 767px) {
+
+    .custom-print-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+    }
+
+    .custom-print-form,
+    .print-guidelines {
+        padding: 20px;
+    }
+
+    .custom-print-estimate .summary-row {
+        gap: 10px;
+    }
+
+    #estimateTotal {
+        font-size: 1.3rem;
+    }
+
+    #addCustomPrintToCart {
+        width: 100%;
+        text-align: center;
+    }
+
+    main:has(#customPrintForm) {
+        padding-bottom: 100px;
+    }
+}
+
+/* ========================================
+   REDUCED MOTION ACCESSIBILITY
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    .cart-notification.show {
+        animation: none;
+    }
+
+    #addCustomPrintToCart {
+        transition: none;
     }
 }
